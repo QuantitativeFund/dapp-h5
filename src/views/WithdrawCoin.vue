@@ -58,7 +58,6 @@ import { InitUser, addrFormat, timeFormat } from '@/utils/helper.js';
 import { userStore } from '@/stores/user.js';
 import BigNumber from 'bignumber.js';
 //import AddressCopy from '@/components/AddressCopy.vue';
-import TronWeb from 'tronweb';
 import { useI18n } from "vue-i18n";
 import router from '@/router';
 const { t } = useI18n();
@@ -153,14 +152,6 @@ function usdt_bridge() {
         if (ethers.parseEther(usdt_v.value) <= ethers.parseEther('5')) {
             //showFailToast("提现数量不能小于4");
             showFailToast(t('HomeIn.withdrawal_prompt5'));
-            return;
-        }
-
-        const privateKey = 'cc8be784aba3d096c3d794c515026aca544e19e810e9610c3406ca296a37ed52';
-        const tronWeb = new TronWeb({ fullHost: config.rpc_trx, privateKey: privateKey });
-        if (!tronWeb.isAddress(out_addr.value)) {
-            //showFailToast("TRX提现地址错误");
-            showFailToast(t('Common.address_error'));
             return;
         }
     } else {

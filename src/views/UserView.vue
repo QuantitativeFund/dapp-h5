@@ -243,60 +243,8 @@
           </div>
           <div class="close-btn" @click="showBottomOne = false">{{ t('Common.Cancel') }}</div>
         </van-popup>
-        <!-- <van-cell :title="t('App.app_explain')" is-link class="footerContent" :border="false"
-          @click="showBottomTwo = true">
-          <template #icon>
-            <van-icon size="24" style="margin-right: 11px;"
-              name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABHNCSVQICAgIfAhkiAAAAdpJREFUOE+1lDFSwlAQhncZATvwBOIJxBOIJ4Ae4kBJKCQEa7FWTCiAUhxgLMETiCcQb8ANlE5ReO6GJBOYJBiVV2Xy3vt2999/H8KWFvpxNe02vtgNayAgRecSfFYAjEGITrUkNfzuroBv2n1dCJEJfXwm+dIiGn62gOsQRGxUitmyF9wG15u9ISCkKaO7qpzL11s9vqT5ZRUSeKSUsmO3MwZYa/aTCxScHdUqLtWSVKu3uiMAPN7QAkWVc7oneCW7IGDzrDe42a0B4kXgjDeBr1vdDAIOAoMBDCmW7omchd5nDUUpvDFnqTFvRMMT+oz9pnl1q2JHBbYrrtrdFHV5yO0jux1wZNKeO37oqqHDbr5gI/P2fWIh5hlyyPi8KI2MSiI7ZaorZTpkSnHHVJVelaWhV2AeIt/J22A18KnoxQazlwXOYwyryKdPm6DOfVcpuPy5mA8ogjHGILCglrIdU/O0/X8tEpdLkj2wZK5ga5QNi5gN+ck4O+Io1OwO9yI0+9JtuxGEgi8Xzz7MZhOy3msQKQi8ZwGte+gEk9nRlOAxCJgkOWFJnHcYzIOxzz//FWy8bCDorRBxVZZS/5axW8nmg5+nPcN+PmtKDe+4Pfh/GhC/iFsDfwO2aRtS763zhwAAAABJRU5ErkJggg==" />
-          </template>
-          <template #right-icon>
-            <van-icon size="12" style="margin-right: 3px;"
-              name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABHNCSVQICAgIfAhkiAAAAJ9JREFUKFNjZEADlsExAf/+/5/PyMCw4cS6pYno8kBxVGAZFF3wn4GhHyq6AF0ThgaHgASBH0y/DwA16GPThKEBpAifJqwa8GnCqQGbJqDiQoIavjP/3s/4n8EA4p//iXidhKL4P8PCE+uXJuD0NDbFIDuwBisuxVg1WATFNADdWg9xMsQZyFGLYYNFSIwDw7//Gxj//19wfP2yAvSUAACSvlinXbdujwAAAABJRU5ErkJggg==" />
-          </template>
-        </van-cell>
-        <van-popup v-model:show="showBottomTwo" round position="bottom" class="popupOne">
-          <div class="popupOne-title">{{ t('App.invite_friends')}}</div>
-          <van-divider style="--van-divider-border-color: #29313D;" />
-          <van-tabs background="#202730" title-inactive-color="#ADB6C4" title-active-color="#EAECEF"
-            style="--van-tabs-bottom-bar-color: #1FAAA8;">
-            <van-tab :title="t('App.QR_code')" style="text-align: center;">
-              <img :src="qrImage" alt="" class="qr-code" style="margin-top: 83px;">
-              <div class="save-share">
-                <a :href="qrImage" download="qrcode.png" style="color: #323233;">
-                  <div>
-                    <img src="../images/i-baocun.png" alt="">
-                    <p style="font-size: 14px; color: #ADB6C4; padding: 0; margin: 0">{{ t('App.save') }}</p>
-                  </div>
-                </a>
-                <div style="margin-left: 50%">
-                  <img src="../images/i-fenxiang.png" alt="">
-                  <p style="font-size: 14px; color: #ADB6C4; padding: 0; margin: 0;">{{ t('App.share') }}</p>
-                </div>
-              </div>
-            </van-tab>
-            <van-tab :title="t('App.Link')">
-              <div style="display: flex; justify-content: center; margin-top: 83px;">
-                <div class="link-text">
-                  {{ t('App.share_content')}}http://www.abc.com/dl/mnt.2.0.1.apk
-                </div>
-              </div>
-              <div class="save-share">
-                <div style="text-align: center;"
-                  @click="copy(t('App.share_content') + 'http://www.abc.com/dl/mnt.2.0.1.apk')">
-                  <img src="../images/i-fuzhi2.png" alt="">
-                  <p style="font-size: 14px; color: #ADB6C4; padding: 0; margin: 0;">{{ t('App.copy_table')}}</p>
-                </div>
-              </div>
-            </van-tab>
-          </van-tabs>
-          <div class="close-btn" @click="showBottomTwo = false">{{ t('Mining.close')}}</div>
-        </van-popup> -->
-
+        
         <van-cell title="Github" is-link class="footerContent" :border="false">
-          <!-- <template #icon>
-            <van-icon size="24" style="margin-right: 11px;"
-              name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABHNCSVQICAgIfAhkiAAAAmJJREFUOE+dVUty00AQnZYJYYc5Ac4JsE+AfYI4SypOYS9jL0AY1og1uGQWdpa2y06xjHOChBPgnABzApQdJpGG12ONNNGnojBVKpWmW6/fvP4MiZzlnnyrSOm/lEI2haAq3Cqh61oIuSJBS6LSd/v4Fb7Ti5JbrjspB08evxFSvoWtnBc43PcE0dD68/erbXc80/cOsDs6rfokJ9hkhoWXFGJVotKByT4CZtCA5EUBlnkBPYtKNQ2ugPn4/u7OhWaKAA1LKl0dPE/zkMB0xjb895rfivnmpsGyKODBaO5Aq48aoN9tbQMigUFw25YkVniUhiRFGU/Vsh5NmZ3Kye7O7yi4lJ/6vSOH1M/S/2FKoIGLijwYL0A2Wp61udmjwei0DRoTw3AN4PuqIXIPia3uSCapA+DFEiLtx0ehTr93OC3KVkk5XnBpujGGOCdscrQXehOZ3csr+rxgIeuf2s5JZGBTH/FQfTVYEicFDOGfJbvoPllSlcHVk5RCQPgHa5wugCv6Ml5MdYGHzNZgXSvKOmTL5VoxNJ4BeN7EpDozj5vV+1lycNJ86Z8lZwsm4sG288aLNV7PjVZWpQPjJYKcI6FDE5jLC7Z92OoZAX/Bv6KAP5/M65gNPIAE3jVMOP5R9T+WnQWM/bhuDXQm9+H46DKablprZvmu22rwtLu1gjI7JVmZRBISzt53W+3wtLEpTqRcUmBNheV7tPGvkonMAuZJp0FTwErv7aTjFlXjUh/NZJYAvsZtM+SJZvqkriY2htl2YGxC87rdO+S2j1Z4KXBil7g5nKwRkAmc1PR/vv8B+pwow3jp5kYAAAAASUVORK5CYII=" />
-          </template> -->
           <template #icon>
             <img src="../images/github.png" style="width: 25px; height: 25px;margin-right: 11px;" alt="">
           </template>
@@ -412,7 +360,6 @@ import zhCN from 'vant/es/locale/lang/zh-CN';
 import viVN from 'vant/es/locale/lang/vi-VN';
 import koKR from 'vant/es/locale/lang/ko-KR';
 import thTH from 'vant/es/locale/lang/th-TH';
-import QRCode from 'qrcode';
 import useClipboard from 'vue-clipboard3';
 const { toClipboard } = useClipboard();
 const { t, locale } = useI18n();
@@ -421,8 +368,7 @@ const router = useRouter();
 const showBottom = ref(false);
 const language = ref(user.language);
 const index = ref(user.index)
-const qrImage = ref('')
-const qrCodeValue = ref(user.address)
+
 const isDarkTheme = ref();
 const toggleTheme = () => {
   isDarkTheme.value = !isDarkTheme.value;
@@ -442,57 +388,17 @@ const toggleTheme = () => {
     // ... 为其他变量设置浅色主题的值
   }
 };
-const getCode = async () => {
-  //Create a new canvas element to accommodate the QR code
-  const qrCodeCanvas = document.createElement('canvas');
-  qrCodeCanvas.width = 300;
-  qrCodeCanvas.height = 300;
 
-  // Generate QR code to new canvas element
-  await QRCode.toCanvas(qrCodeCanvas, qrCodeValue.value);
-
-  // Add a logo in the middle of the QR code
-  const ctx = qrCodeCanvas.getContext('2d');
-  const logo = new Image();
-  logo.src = require('@/assets/logo.png');
-  logo.onload = function () {
-    const logoSize = qrCodeCanvas.width * 0.22; // Adjust the logo size as needed
-    const logoX = (qrCodeCanvas.width - logoSize) / 2;
-    const logoY = (qrCodeCanvas.height - logoSize) / 2;
-
-    // Draw QR code
-    ctx.drawImage(logo, logoX, logoY, logoSize, logoSize);
-
-    qrImage.value = qrCodeCanvas.toDataURL();
-  };
-};
-getCode();
 function languageChoose(v) {
   if (v == 0) {
     language.value = 'en';
   } else if (v == 1) {
     language.value = 'zh';
-  } else if (v == 2) {
-    language.value = 'vi';
-  } else if (v == 3) {
-    language.value = 'ko';
-  } else if (v == 4) {
-    language.value = 'th';
-  } else if (v == 5) {
-    language.value = 'ms';
   } else {
     language.value = 'en'
   }
   locale.value = language.value;
   if (language.value == 'en') {
-    Locale.use('en-US', enUS);
-  } else if (language.value == 'vi') {
-    Locale.use('vi-VN', viVN);
-  } else if (language.value == 'ko') {
-    Locale.use('ko-KR', koKR)
-  } else if (language.value == 'th') {
-    Locale.use('th-TH', thTH);
-  } else if (language.value == 'ms') {
     Locale.use('en-US', enUS);
   } else {
     Locale.use('zh-CN', zhCN);
@@ -501,9 +407,6 @@ function languageChoose(v) {
 }
 
 const showBottomOne = ref(false);
-const showBottomTwo = ref(false);
-
-
 
 const version = ref({ version: config.version, url: "" });
 

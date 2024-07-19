@@ -81,7 +81,6 @@ import { InitUser, addrFormat, timeFormat } from '@/utils/helper.js';
 import { userStore } from '@/stores/user.js';
 import BigNumber from 'bignumber.js';
 import AddressCopy from '@/components/AddressCopy.vue';
-import TronWeb from 'tronweb';
 import { useI18n } from "vue-i18n";
 const { t } = useI18n();
 
