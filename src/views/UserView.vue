@@ -190,10 +190,6 @@
           <div style="position: absolute; width: 22px; height:22px; top:15%; right: 15%;">
             <img src="../images/flag-cn.png" alt="" style="width: 22px; height:22px;" v-show="language == 'zh'">
             <img src="../images/flag-eng.png" alt="" style="width: 22px; height:22px;" v-show="language == 'en'">
-            <img src="../images/flag-kr.png" alt="" style="width: 22px; height:22px;" v-show="language == 'ko'">
-            <img src="../images/flag-mls.png" alt="" style="width: 22px; height:22px;" v-show="language == 'ms'">
-            <img src="../images/flag-thi.png" alt="" style="width: 22px; height:22px;" v-show="language == 'th'">
-            <img src="../images/flag-vn.png" alt="" style="width: 22px; height:22px;" v-show="language == 'vi'">
           </div>
         </div>
         <van-popup v-model:show="showBottomOne" round position="bottom" class="popupOne">
@@ -215,28 +211,24 @@
           </div>
           <div class="language-icon">
             <div style="position: relative;">
-              <img src="../images/flag-vn.png" alt="" @click="languageChoose(2)">
               <img src="../images/i-nowChoose.png" alt="" v-show="language == 'vi'"
                 style="position: absolute; left: 95%; top: 43%;">
             </div>
           </div>
           <div class="language-icon">
             <div style="position: relative;">
-              <img src="../images/flag-kr.png" alt="" @click="languageChoose(3)">
               <img src="../images/i-nowChoose.png" alt="" v-show="language == 'ko'"
                 style="position: absolute; left: 95%; top: 43%;">
             </div>
           </div>
           <div class="language-icon">
             <div style="position: relative;">
-              <img src="../images/flag-thi.png" alt="" @click="languageChoose(4)">
               <img src="../images/i-nowChoose.png" alt="" v-show="language == 'th'"
                 style="position: absolute; left: 95%; top: 43%;">
             </div>
           </div>
           <div class="language-icon">
             <div style="position: relative;">
-              <img src="../images/flag-mls.png" alt="" @click="languageChoose(5)">
               <img src="../images/i-nowChoose.png" alt="" v-show="language == 'ms'"
                 style="position: absolute; left: 95%; top: 43%;">
             </div>

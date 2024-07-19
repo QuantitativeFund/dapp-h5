@@ -1,140 +1,9 @@
 <template>
-  <div class="box">
-    <div class="title">{{ t('HomeIn.miner') }}</div>
-    <van-pull-refresh v-model="loading1" @refresh="load1" style="min-height: 80vh;">
-      <!-- <van-empty v-show="childs0.length == 0" :description="t('HomeIn.signature_information')" /> -->
-      <template v-for="obj, key in childs0" :key="key">
-        <div class="your-minner">{{ t('Common.Invitee_application') }}</div>
-        <van-cell-group inset class="miner-information" :border="false">
-          <van-cell :title="t('HomeIn.miner_address')" :value="addrFormat(obj.c_addr)" class="miner-informationTwo"
-            :border="false">
-            <template #right-icon>
-              <AddressCopy :address="obj.c_addr"></AddressCopy>
-            </template>
-          </van-cell>
-          <van-cell :title="t('Common.time')" :value="timeFormat(obj.sign_utc)" class="miner-informationTwo"
-            :border="false" />
-          <van-button class="binding-btn" round @click="bind(obj.sign, obj.c_addr, obj.id)">{{
-            t('HomeIn.binding') }}</van-button>
-        </van-cell-group>
-        <br />
-      </template>
-      <div class="your-minner">{{ t('HomeIn.miner_information_o') }}
-      </div>
-      <van-cell-group inset class="miner-information" :border="false">
-        <van-cell :title="t('HomeIn.invite_address')" :value="addrFormat(user.p_address)" class="miner-informationOne"
-          :border="false">
-          <template #right-icon>
-            <AddressCopy :address="user.p_address"></AddressCopy>
-          </template>
-        </van-cell>
-        <van-cell :title="t('HomeIn.miner_count')" :value="childs1.length" class="miner-informationTwo"
-          :border="false" />
-        <van-cell :title="t('HomeIn.account_address')" :value="addrFormat(user.address)" class="miner-informationThree"
-          :border="false">
-          <template #right-icon>
-            <AddressCopy :address="user.address"></AddressCopy>
-          </template>
-        </van-cell>
-        <van-cell title="USDT" :value="BigNumber(user.USDT).toFixed(4)" is-link to="usdt_info"
-          class="miner-informationFour" :border="false" />
-        <van-cell title="MNT" :value="BigNumber(user.MNT).toFixed(6)" is-link to="mnt_info"
-          class="miner-informationFive" :border="false" />
-      </van-cell-group>
-      <div class="minner-team">{{ t('HomeIn.miner_team') }}</div>
-      <template v-for="obj, key in childs1" :key="key">
-        <van-cell-group inset class="invitation-information" :border="false">
-          <van-cell :title="getTitle(key)" class="invitation-informationOne" :border="false"></van-cell>
-          <van-cell :title="t('Common.address')" :value="addrFormat(obj.addr)" class="invitation-informationTwo"
-            :border="false">
-            <template #right-icon>
-              <AddressCopy :address="obj.addr"></AddressCopy>
-            </template>
-          </van-cell>
-          <van-cell :title="t('HomeIn.vote_quantity')" :value="BigNumber(ethers.formatEther(obj.info.vote)).toFixed(6)"
-            class="invitation-informationThree" :border="false" />
-
-          <van-cell :title="t('HomeIn.basic_power')"
-            :value="BigNumber(ethers.formatEther(obj.info.vote_power)).toFixed(6)" :label="t('HomeIn.power_prompt')"
-            class="invitation-informationFive" :border="false" />
-        </van-cell-group>
-      </template>
-    </van-pull-refresh>
-  </div>
-  <van-popup v-model:show="verifyPassword" class="popup" :border="false">
-    <div class="popup-title">{{ t('Common.password_authentication') }}</div>
-    <van-field v-model="password" type="password" :placeholder="t('Common.input_psaaword')" autocomplete="off"
-      class="input-password" :border="false" />
-    <div class="confirm-btn" @click="op">{{ t('Common.Sure') }}</div>
-    <div class="cancel-btn" @click="verifyPassword = false">{{ t('Common.Cancel') }}</div>
-  </van-popup>
+  与原来的功能相同，保证界面与以前风格不同
 </template>
 
 <script setup>
-import { ref } from 'vue';
-import axios from 'axios';
-import { showSuccessToast, showFailToast, showLoadingToast } from 'vant';
-import { ethers } from 'ethers';
-
-import { config } from '@/const/config';
-import { InitUser, addrFormat, timeFormat } from '@/utils/helper.js';
-import { userStore } from '@/stores/user.js';
-import BigNumber from 'bignumber.js';
-import AddressCopy from '@/components/AddressCopy.vue';
-import { useI18n } from "vue-i18n";
-const { t } = useI18n();
-
-const provider = new ethers.JsonRpcProvider(config.rpc);
-const helper = new ethers.Contract(config.helper_addr, config.helper, provider);
-
-const user = userStore();
-const verifyPassword = ref(false);
-const password = ref('');
-
-const loading0 = ref(false);
-const childs0 = ref([]);
-
-const loading1 = ref(false);
-const childs1 = ref([]);
-
-const loading2 = ref(false);
-
-function mnt_prompt() {
-  if (ethers.parseEther(user.MNT) < ethers.parseEther("0.1")) {
-    showFailToast(t("Common.mnt_prompt"));
-    return true;
-  }
-  return false;
-}
-
-function getTitle(key) {
-  if (key == 0) {
-    return t('HomeIn.inviter_information'); //'邀请者信息';
-  } else if (key == 1) {
-    return t('HomeIn.self_information');// '自身信息';
-  } else {
-    // 被邀请者信息
-    return `${t('HomeIn.invitee_information')}-${key - 1}`;
-  }
-}
-
-async function load0() {
-  await InitUser();
-  const ret = await axios.get(`${config.api}friends/childs/${user.address}/0`);
-  childs0.value = ret.data;
-  loading0.value = false;
-}
-
-async function load1() {
-  helper.MiningInfo(user.address).then((ret) => {
-    childs1.value = ret.infos;
-    loading1.value = false;
-  })
-}
-
-let op = async () => {
-}
-
+/*
 function bind(sign, c_addr, id) {
   if (mnt_prompt()) {
     return;
@@ -176,9 +45,7 @@ function bind(sign, c_addr, id) {
     }
   }
 }
-
-load0();
-load1();
+*/
 </script>
 
 <style scoped>

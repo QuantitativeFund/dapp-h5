@@ -16,6 +16,9 @@ const config = {
     mining_addr: '0x8934C6382372Eb445FAcAf242Af0f3a7923875F6',
     activity_addr: '0x9B58346907f5945493D265A4332Bc3A9d96308F2',
 
+    //chainId: "0xcc",
+    chainId: "0xb63f",
+
     api: 'https://rpc.metabasenet.site/api/',
     version: '1.0.0',
 }

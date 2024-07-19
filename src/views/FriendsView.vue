@@ -4,13 +4,10 @@
 </template>
 
 <script setup>
-import { ZeroAddress } from 'ethers'
-import HomeIn from '@/components/HomeIn.vue'
-import HomeOut from '@/components/HomeOut.vue'
-import { userStore } from '@/stores/user.js'
-//import { useRouter } from 'vue-router'
-
-const user = userStore()
-//const router = useRouter()
-//console.log(user.p_address, ZeroAddress)
+import { ZeroAddress } from 'ethers';
+import HomeIn from '@/components/HomeIn.vue';
+import HomeOut from '@/components/HomeOut.vue';
+import { userStore } from '@/stores/user.js';
+const user = userStore();
+//console.log(user.p_address);
 </script>
