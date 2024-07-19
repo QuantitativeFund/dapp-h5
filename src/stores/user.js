@@ -12,15 +12,12 @@ export const userStore = defineStore("userStore", {
     };
   },
   actions: {
-
     set_address(address) {
       this.address = address;
     },
-
     set_paddress(address) {
       this.p_address = address;
     },
-
     set_USDT(usdt) {
       this.USDT = usdt;
     },

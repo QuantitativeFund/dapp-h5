@@ -88,7 +88,7 @@ export function signParams(chainId, popularized_addr, p_addr, addr) {
   const msgParams = {
     domain: {
       chainId: chainId,
-      name: "Sweet Pie",
+      name: "QFT Popularized",
       verifyingContract: popularized_addr,
       version: "1",
     },

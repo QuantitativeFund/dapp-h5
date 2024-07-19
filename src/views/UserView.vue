@@ -28,7 +28,7 @@
           <van-divider style="--van-divider-border-color: #29313D" />
           <div class="walletSwitch-content" v-for="obj, key in user.wallets" :key="key">
             <div class="walletSwitch-contentLeft">
-              <div class="walletSwitch-contentLeft-one" @click="selectWallet(key)"><img src="../images/i-wallet.png"
+              <div class="walletSwitch-contentLeft-one"><img src="../images/i-wallet.png"
                   alt="" width="25" height="auto"></div>
               <div class="walletSwitch-contentLeft-two">
                 <div class="walletSwitch-contentLeft-twoTop">{{ obj.walletName }}</div>
@@ -51,17 +51,17 @@
       <div class="box-two">
         <div class="box-twoLeft">
           <div class="box-twoLeft-top">
-            <h3>{{ BigNumber(user.MNT).toFixed(6) }}</h3>
+            <h3>{{ 100 }}</h3>
             <div style="display:flex;justify-content: center;">
               <img src="../images/logo.png" width="25" height="auto" alt="">
-              <p style="margin-left:5px">MNT</p>
+              <p style="margin-left:5px">QFT</p>
             </div>
           </div>
           <div class="box-twoLeft-bottom">
-            <div class="box-twoLeft-bottom-one" @click="mnt_transferPage">
+            <div class="box-twoLeft-bottom-one" >
               <img src="../images/i-trans.png" alt="" style="width: 25px; height: 25px;">
             </div>
-            <div class="box-twoLeft-bottom-two" @click="mntSteamPage"><img src="../images/i-trans-record.png" alt=""
+            <div class="box-twoLeft-bottom-two"><img src="../images/i-trans-record.png" alt=""
                 style="width: 25px; height: 25px;">
             </div>
           </div>
@@ -277,22 +277,8 @@
             </a>
           </template>
         </van-cell>
-        <van-cell title="Facebook" is-link class="footerContent" :border="false">
-          <!-- <template #icon>
-            <van-icon size="24" style="margin-right: 11px;"
-              name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABHNCSVQICAgIfAhkiAAAAeZJREFUOE+VlUtSwkAQhrtDIe7kBuoJ5AaGE8DWQkpYAgtNpVyLa6XABbiEKmAPJyCcQHICPQLsRMq0PUOCIS+GqWJBpufrf/o1CDGr3e5nKZMuEFCRAC8QICdMCWCBQF8IOMH1ZmoY1WUUgu33lwA6pyf3QPTAO9k4x+73JSB2tO+ft6CDPbCA/mbSM0/dAehuW9witd7k/fAdWCrNpD8VVMb5W2rrzaUHl2B1pTTnIFuOBhYSZPmX41A8eZ78yiW41R02/QaRkgirZqM0CO61eiPm+RbRs9koN1EtBDQ362U9ymEIDCBDgq3uuAJI/cREuSo8G3FDRLx2yy/skG/H4NEEEApJYAcp/1grWzIf3XGO/38kC4Ep8lUWbHSlCn55H+oa4SzJXjZRRIxCZ/yKVcACEA8OxDVKYZITAf7iQ+ehgwrghDK145OnAH7tjQbcCHdhUSJ58eXGEwzEbbga0TAaJZFkWRWE1HZLTUy88KAS5eY2iACcxWX6yOStuEHEmD3c0keBvZbedVNCPR8Bts36rXwQ/sfmtqMmURWiCLY1TBWN2s02L/64uvG2gp2oALY5rnrkoPc7cOtTPE0yoQngFT9hHTEmg4kPvXmegau+woNd1wCb/nJzgHh+g8UqB3GP6R/Z7SqySGGsRQAAAABJRU5ErkJggg==" />
-          </template> -->
-          <template #icon>
-            <img src="../images/icon_facebook.png" style="width: 25px; height: 25px;margin-right: 11px;" alt="">
-          </template>
-          <template #right-icon>
-            <a href="https://www.facebook.com/profile.php?id=61557178406261" target="_balck">
-              <van-icon size="24"
-                name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAYAAADgdz34AAAABHNCSVQICAgIfAhkiAAAASFJREFUSEvdlE0OgjAQhTskxqV4Ae0N1BtwBN2grDyKHsVdARdwBL2B3KDeAHckRmurkFT+MigmKhsWPN43fTMdIB9+4MP+5A8BQ989yNhGJdHFcBET7jicet70ahQ1xpVEfD4P9X8LEUmAqOhLBJ2uxWezWGq41AyLOrE/2o6FAhztBao/gy3bgIDlw7RlgGYepYC4tRPo5io6cU7u2bcCyJs/+sJ2rQA08xMQw+K2raaODHw3BCLMt05QZa4AlDGq3mqMX5qiOvO6dVN5D/QxxZjTIDBJkpiNT0A9thYAK1nlU+b5qtPL15OF9RtFlFY/1RtaFkm2AfIXFBVRXcbZt+8DYKou02AiqlrXGGYkAePaJmNcmmhQK7mJYV77+4AbuSTAGWYBcOwAAAAASUVORK5CYII=" />
-            </a>
-          </template>
-        </van-cell>
-        <van-cell :title="`${t('User.version')} ${config.version}`" v-show="version.version > config.version"
+       
+        <van-cell :title="`${t('User.version')} ${config.version}`"
           class="footerContent" :border="false">
           <template #icon>
             <van-icon size="24" style="margin-right: 11px;"
@@ -303,25 +289,16 @@
               name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABHNCSVQICAgIfAhkiAAAAJ9JREFUKFNjZEADlsExAf/+/5/PyMCw4cS6pYno8kBxVGAZFF3wn4GhHyq6AF0ThgaHgASBH0y/DwA16GPThKEBpAifJqwa8GnCqQGbJqDiQoIavjP/3s/4n8EA4p//iXidhKL4P8PCE+uXJuD0NDbFIDuwBisuxVg1WATFNADdWg9xMsQZyFGLYYNFSIwDw7//Gxj//19wfP2yAvSUAACSvlinXbdujwAAAABJRU5ErkJggg==" />
           </template>
           <template #value>
-            <a :href="version.url" target="_blank" style="color: inherit; text-decoration: none;">
               <div style="display: flex; justify-content: flex-end;align-items: center; margin-right: 10px; ">
                 <div style="margin-top: 5px;margin-right: 7px;"><van-badge dot> </van-badge></div>
                 <!-- <span class="custom-title">V&nbsp;</span> -->
-                <van-tag>V{{ version.version }}</van-tag>
+                <van-tag>V{{ config.version }}</van-tag>
               </div>
-            </a>
           </template>
         </van-cell>
       </van-cell-group>
     </van-pull-refresh>
   </div>
-  <van-popup v-model:show="verifyPassword" class="popup" :border="false">
-    <div class="popup-title">{{ t('Common.password_authentication') }}</div>
-    <van-field v-model="password" type="password" :placeholder="t('Common.input_psaaword')" autocomplete="off"
-      class="input-password" :border="false" />
-    <div class="confirm-btn" @click="op">{{ t('Common.Sure') }}</div>
-    <div class="cancel-btn" @click="verifyPassword = false">{{ t('Common.Cancel') }}</div>
-  </van-popup>
 </template>
 
 <script setup>
@@ -340,18 +317,12 @@ import { userStore } from "@/stores/user.js";
 import {
   InitUser,
   addrFormat,
-  timeFormat,
-  LoadUserMNT,
-  LoadUserUSDT,
 } from "@/utils/helper.js";
 import { config } from "@/const/config";
 import AddressCopy from "@/components/AddressCopy.vue";
 import { useI18n } from "vue-i18n";
 import enUS from 'vant/es/locale/lang/en-US';
 import zhCN from 'vant/es/locale/lang/zh-CN';
-import viVN from 'vant/es/locale/lang/vi-VN';
-import koKR from 'vant/es/locale/lang/ko-KR';
-import thTH from 'vant/es/locale/lang/th-TH';
 import useClipboard from 'vue-clipboard3';
 const { toClipboard } = useClipboard();
 const { t, locale } = useI18n();
@@ -399,13 +370,6 @@ function languageChoose(v) {
 }
 
 const showBottomOne = ref(false);
-
-const version = ref({ version: config.version, url: "" });
-
-axios.get(`${config.api}wallet/version`).then((ret) => {
-  version.value = ret.data;
-});
-
 
 
 const verifyPassword = ref(false);
@@ -468,21 +432,6 @@ function importWallet() {
 let cancel = () => {
 }
 
-function selectWallet(key) {
-  user.index = key;
-  user.mnemonic = user.wallets[key].mnemonic;
-  user.address = user.wallets[key].address;
-  user.privateKey = user.wallets[key].privateKey;
-  user.password = user.wallets[key].password;
-  user.p_address = user.wallets[key].p_address;
-  user.USDT = user.wallets[key].USDT;
-  user.MNT = user.wallets[key].MNT;
-  user.USDT_approve = user.wallets[key].USDT_approve;
-  user.walletName = user.wallets[key].walletName;
-  user.promptInfo = user.wallets[key].promptInfo;
-  user.last_vote = user.wallets[key].last_vote;
-  router.push('/user')
-}
 let noClick = ref(false);
 function deleteWallet(key) {
   if (user.wallets.length == 1) {
@@ -513,15 +462,11 @@ function deleteWallet(key) {
     password.value = ''
   }
 }
-function mnt_transferPage() {
-  router.push('mnt')
-}
+
 function usdt_transferPage() {
   router.push('usdt')
 }
-function mntSteamPage() {
-  router.push('mnt_info')
-}
+
 function usdtSteamPage() {
   router.push('usdt_info')
 }

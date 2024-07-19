@@ -3,7 +3,6 @@ import abi_popularized from './popularized.json';
 import abi_mining from './mining.json';
 import abi_activity from './activity.json';
 
-
 const config = {
     erc20: abi_erc20,
     popularized: abi_popularized,
@@ -19,7 +18,7 @@ const config = {
     //chainId: "0xcc",
     chainId: "0xb63f",
 
-    api: 'https://rpc.metabasenet.site/api/',
+    api: 'https://site.metabasenet.site/api/',
     version: '1.0.0',
 }
 

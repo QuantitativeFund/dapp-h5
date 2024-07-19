@@ -1,7 +1,7 @@
 <template>
   <router-view></router-view>
   <Tabbar v-model="active" placeholder class="tabbar" active-color="#1FAAA8" :border="false">
-    <TabbarItem name="friends" to="/friends" class="tabbarItemOne"> 朋友
+    <TabbarItem name="friends" to="/friends" class="tabbarItemOne"> 链接
       <template #icon>
         <img src="./images/gongren.png" style="width: 25px; height: 25px;" alt="">
       </template>
@@ -11,7 +11,7 @@
         <img src="./images/chanzi.png" style="width: 25px; height: 25px;" alt="">
       </template>
     </TabbarItem>
-    <TabbarItem name="activity" to="/activity" class="tabbarItemFour"> 活动
+    <TabbarItem name="activity" to="/activity" class="tabbarItemFour"> 市场
       <template #icon>
         <img src="./images/jiedian.png" style="width: 25px; height: 25px;" alt="">
       </template>
@@ -35,15 +35,18 @@ const active = ref('friends');
 
 connectMetaMask().then(async () => {
   const user = userStore();
-  user.address = (await getAccount())[0];
+  user.set_address((await getAccount())[0]);
+  //user.address = (await getAccount())[0];
+  //const provider = new ethers.JsonRpcProvider("https://rpc.metabasenet.site");
   const popularized = new ethers.Contract(
     config.popularized_addr,
     config.popularized,
     Provider
   );
-  const ret = await popularized.spreads(user.address);
-  user.set_paddress(ret.parent);
-  //console.log(user.p_address === ret.parent);
+  popularized.spreads(user.address).then((ret) => {
+    user.set_paddress(ret.parent);
+    console.log("====", ret.parent);
+  });
 })
 </script>
 
