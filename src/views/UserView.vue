@@ -16,11 +16,11 @@
             alt=""></div>
         <div class="box-one-itemTwo-two" @click="createWallet"><img src="../images/i-add.png" width="23" height="auto"
             alt=""></div>
-        <div @click="toggleTheme">
+        <!-- <div @click="toggleTheme">
           <div v-if="isDarkTheme" class="box-one-itemTwo-0"><img src="../images/moons.png" width="25" height="auto"
               alt=""></div>
           <div v-else class="box-one-itemTwo-0"><img src="../images/moon.png" width="25" height="auto" alt=""></div>
-        </div>
+        </div> -->
         <div class="box-one-itemTwo-three" @click="showBottom = true"><img src="../images/i-qihuan.png" width="23"
             height="auto" alt=""></div>
         <van-popup v-model:show="showBottom" round position="bottom" class="walletSwitch-pop">
@@ -28,8 +28,8 @@
           <van-divider style="--van-divider-border-color: #29313D" />
           <div class="walletSwitch-content" v-for="obj, key in user.wallets" :key="key">
             <div class="walletSwitch-contentLeft">
-              <div class="walletSwitch-contentLeft-one"><img src="../images/i-wallet.png"
-                  alt="" width="25" height="auto"></div>
+              <div class="walletSwitch-contentLeft-one"><img src="../images/i-wallet.png" alt="" width="25"
+                  height="auto"></div>
               <div class="walletSwitch-contentLeft-two">
                 <div class="walletSwitch-contentLeft-twoTop">{{ obj.walletName }}</div>
                 <div class="walletSwitch-contentLeft-twoBottom">{{ addrFormat(obj.address) }} <address-copy
@@ -58,7 +58,7 @@
             </div>
           </div>
           <div class="box-twoLeft-bottom">
-            <div class="box-twoLeft-bottom-one" >
+            <div class="box-twoLeft-bottom-one">
               <img src="../images/i-trans.png" alt="" style="width: 25px; height: 25px;">
             </div>
             <div class="box-twoLeft-bottom-two"><img src="../images/i-trans-record.png" alt=""
@@ -235,7 +235,7 @@
           </div>
           <div class="close-btn" @click="showBottomOne = false">{{ t('Common.Cancel') }}</div>
         </van-popup>
-        
+
         <van-cell title="Github" is-link class="footerContent" :border="false">
           <template #icon>
             <img src="../images/github.png" style="width: 25px; height: 25px;margin-right: 11px;" alt="">
@@ -277,9 +277,8 @@
             </a>
           </template>
         </van-cell>
-       
-        <van-cell :title="`${t('User.version')} ${config.version}`"
-          class="footerContent" :border="false">
+
+        <van-cell :title="`${t('User.version')} ${config.version}`" class="footerContent" :border="false">
           <template #icon>
             <van-icon size="24" style="margin-right: 11px;"
               name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABYAAAAWCAYAAADEtGw7AAAABHNCSVQICAgIfAhkiAAAAlVJREFUOE+1VU16EkEQrRoF3BlvgCcQb0BOIK6TfJKlYSF8xLW4VgQXJMvEL7B2coLkCHACuYHDTsBQvurpJtPNTPxcOBvo6qrXr1/9NFPBNxhc7Eml9EpIGkJcZaKaugrRlEnmTBzzcn3d6RwneRDw9z8F3DwpvyORNnb2ig629oSYh9Gv1dfwAA9YQe8qpRvHDsELMIyxnm5YpgoWCddgq8HWwPKpu8Wj5Xo/C74FNkwrpR9bliIfo9XvYdFVjX/5cRuMPzj20XL93Pkb4IDpAuwa798e3f5FBrP96fyqjlvEyl71d8wNcH901XMnA3Q/D3QwmpjkdVoHRpLsZ8FvjA037baOeuxJYI1hYH80aRLLRRrIx93WweWuz5ZcopJwJmgBQzXU1AN1aDngluDcJBT7AB7HxIR6pW+nJ4fNLJNc0AfAP5+NL6HtGxT7NffPxqrZC5Wve3I4dHEB6Mz66Pb9/4A5sLT2B6aJsMAvUZi0zIEzSFRHKf50fizcNMyIEpB55shkk1gMjIQJSx3l01bdQwJfzidDEZlnbxkC50qxk/WCm3k5sVKoXA8mLwjKlSzr4yfvvkZN/RW1cFEuHLDfDyg3v/7Srgll0LUDRvu+zOu+TPeafvh/La1sLOtbW6sJSu/1Pw6h74jV2T1DlZiZEo7NOWxmxmIo9fIGuKdp+iA46byRsDPo0QiOuWLghaBYNjKN7KDfYNBzxDW0rQ5698KYJsod9B6TdIBre6bsi78FGA/zHoSdN88/oAxW0gDrqtVft2dgC8k4jlaruKg8/wCtcp+yvmQTwQAAAABJRU5ErkJggg==" />
@@ -289,11 +288,11 @@
               name="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAwAAAAMCAYAAABWdVznAAAABHNCSVQICAgIfAhkiAAAAJ9JREFUKFNjZEADlsExAf/+/5/PyMCw4cS6pYno8kBxVGAZFF3wn4GhHyq6AF0ThgaHgASBH0y/DwA16GPThKEBpAifJqwa8GnCqQGbJqDiQoIavjP/3s/4n8EA4p//iXidhKL4P8PCE+uXJuD0NDbFIDuwBisuxVg1WATFNADdWg9xMsQZyFGLYYNFSIwDw7//Gxj//19wfP2yAvSUAACSvlinXbdujwAAAABJRU5ErkJggg==" />
           </template>
           <template #value>
-              <div style="display: flex; justify-content: flex-end;align-items: center; margin-right: 10px; ">
-                <div style="margin-top: 5px;margin-right: 7px;"><van-badge dot> </van-badge></div>
-                <!-- <span class="custom-title">V&nbsp;</span> -->
-                <van-tag>V{{ config.version }}</van-tag>
-              </div>
+            <div style="display: flex; justify-content: flex-end;align-items: center; margin-right: 10px; ">
+              <div style="margin-top: 5px;margin-right: 7px;"><van-badge dot> </van-badge></div>
+              <!-- <span class="custom-title">V&nbsp;</span> -->
+              <van-tag>V{{ config.version }}</van-tag>
+            </div>
           </template>
         </van-cell>
       </van-cell-group>
@@ -332,25 +331,25 @@ const showBottom = ref(false);
 const language = ref(user.language);
 const index = ref(user.index)
 
-const isDarkTheme = ref();
-const toggleTheme = () => {
-  isDarkTheme.value = !isDarkTheme.value;
-  const root = document.documentElement;
-  if (isDarkTheme.value) {
-    // 切换到深色主题
-    root.style.setProperty('--color-background', '#181818');
-    root.style.setProperty('--color-text', '#ffffff');
-    root.style.setProperty('--box-background', '#262727');
-    // ... 为其他变量设置深色主题的值
-  } else {
-    // 切换到浅色主题
-    root.style.setProperty('--color-background', '#edf4ff');
-    root.style.setProperty('--color-text', '#2A4057');
-    root.style.setProperty('--box-background', '#ffffff');
-    // root.style.setProperty('--box-border2A4057');
-    // ... 为其他变量设置浅色主题的值
-  }
-};
+// const isDarkTheme = ref();
+// const toggleTheme = () => {
+//   isDarkTheme.value = !isDarkTheme.value;
+//   const root = document.documentElement;
+//   if (isDarkTheme.value) {
+//     // 切换到深色主题
+//     root.style.setProperty('--color-background', '#181818');
+//     root.style.setProperty('--color-text', '#ffffff');
+//     root.style.setProperty('--box-background', '#262727');
+//     // ... 为其他变量设置深色主题的值
+//   } else {
+//     // 切换到浅色主题
+//     root.style.setProperty('--color-background', '#edf4ff');
+//     root.style.setProperty('--color-text', '#2A4057');
+//     root.style.setProperty('--box-background', '#ffffff');
+//     // root.style.setProperty('--box-border2A4057');
+//     // ... 为其他变量设置浅色主题的值
+//   }
+// };
 
 function languageChoose(v) {
   if (v == 0) {

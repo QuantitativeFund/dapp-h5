@@ -1,23 +1,21 @@
 <template>
-  
- <div class="box">
+
+  <div class="box">
     <div class="title">朋友</div>
     <div class="bind-inviter">绑定邀请人，请输入邀请人地址</div>
     <van-field required maxlength="42" type="textarea" v-model="p_addr" :placeholder="t('HomeOut.address_placeholder')"
-               autocomplete="off" class="input-address" :border="false" />
+      autocomplete="off" class="input-address" :border="false" />
     <div class="apply-binding" @click="sign">申请绑定</div>
     <div class="binding-record">申请绑定记录</div>
     <template v-for="(obj, key) in signs" :key="key">
       <van-cell-group class="bing-content" :border="false" inset>
-        <van-cell title="邀请人地址" :value="addrFormat(obj.p_addr)" class="bing-contentOne"
-                  :border="false">
+        <van-cell title="邀请人地址" :value="addrFormat(obj.p_addr)" class="bing-contentOne" :border="false">
           <template #right-icon>
             <AddressCopy :address="obj.p_addr"></AddressCopy>
           </template>
         </van-cell>
 
-        <van-cell title="申请绑定时间" :value="timeFormat(obj.sign_utc)"
-                  class="bing-contentTwo" :border="false" />
+        <van-cell title="申请绑定时间" :value="timeFormat(obj.sign_utc)" class="bing-contentTwo" :border="false" />
       </van-cell-group>
       <br />
     </template>
@@ -106,38 +104,43 @@ load();
 
 <style scoped>
 .box {
-  background-color: #202730;
+  background-color: var(--color-background);
   min-height: 100vh;
   padding: 0 24px;
 }
+
 .title {
   height: 60px;
   line-height: 60px;
   font-size: 18px;
-  color: #EAECEF;
+  color: var(--color-text);
 }
+
 .bind-inviter {
   font-size: 14px;
-  color: #ADB6C4;
+  color: var(--color-text);
 }
+
 .input-address {
   height: 78px;
   background-color: #29313D;
   margin-top: 12px;
-  --van-field-input-text-color: #EAECEF;
+  --van-field-input-text-color: var(--color-text);
   font-size: 17px;
   position: static;
 }
+
 .apply-binding {
   height: 52px;
   background-color: #1FAAA8;
   text-align: center;
   line-height: 52px;
   font-size: 17px;
-  color: #EEFBFB;
+  color: var(--color-text);
   margin-top: 42px;
   border-radius: 8px;
 }
+
 .popup {
   width: 311px;
   height: 286px;
@@ -146,12 +149,14 @@ load();
   /* overflow: hidden; */
   padding: 0 24px;
 }
+
 .popup-title {
   margin-top: 22px;
   font-size: 18px;
   color: #EAECEF;
   text-align: center;
 }
+
 .input-password {
   height: 52px;
   border-radius: 8px;
@@ -162,6 +167,7 @@ load();
   border-radius: 8px;
   --van-field-input-text-color: #EAECEF;
 }
+
 .confirm-btn {
   height: 42px;
   background-color: #1FAAA8;
@@ -172,28 +178,33 @@ load();
   line-height: 42px;
   border-radius: 8px;
 }
+
 .cancel-btn {
   text-align: center;
   margin-top: 25px;
   font-size: 17px;
   color: #1FAAA8;
 }
+
 .binding-record {
   font-size: 14px;
   color: #ADB6C4;
   margin-top: 44px;
 }
+
 .bing-content {
   background-color: #29313D;
   margin: 12px 0 0 0;
   --van-cell-group-inset-radius: 12px;
 }
+
 .bing-contentOne {
   background-color: #29313D;
   font-size: 12px;
   --van-cell-text-color: #8D96A4;
   --van-cell-value-color: #EAECEF;
 }
+
 .bing-contentTwo {
   background-color: #29313D;
   font-size: 12px;

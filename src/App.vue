@@ -3,7 +3,7 @@
   <Tabbar v-model="active" placeholder class="tabbar" active-color="#1FAAA8" :border="false">
     <TabbarItem name="friends" to="/friends" class="tabbarItemOne"> 链接
       <template #icon>
-        <img src="./images/gongren.png" style="width: 25px; height: 25px;" alt="">
+        <img src="./images/lianjie.png" style="width: 25px; height: 25px;" alt="">
       </template>
     </TabbarItem>
     <TabbarItem name="mining" to="/mining" class="tabbarItemTwo"> 挖矿
@@ -18,7 +18,7 @@
     </TabbarItem>
     <TabbarItem name="user" to="/user" class="tabbarItemFive"> 收益
       <template #icon>
-        <img src="./images/user.png" style="width: 25px; height: 25px;" alt="">
+        <img src="./images/shouyi.png" style="width: 25px; height: 25px;" alt="">
       </template>
     </TabbarItem>
   </Tabbar>
