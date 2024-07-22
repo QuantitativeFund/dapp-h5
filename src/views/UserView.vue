@@ -621,7 +621,7 @@ const copy = async (v) => {
   width: 9.8125rem;
   height: 6.125rem;
   background-color: var(--box-background);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
 }
 
@@ -697,7 +697,7 @@ const copy = async (v) => {
   height: 64px;
   background-color: var(--box-background);
   border-radius: 12px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   text-align: center;
 }
@@ -707,7 +707,7 @@ const copy = async (v) => {
   height: 64px;
   /* background-color: #29313D; */
   background-color: var(--box-background);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
   border-radius: 12px;
   overflow: hidden;
   text-align: center;
@@ -728,7 +728,7 @@ const copy = async (v) => {
   margin: 14px 0 0;
   --van-cell-group-inset-radius: 12px;
   --van-cell-group-background: var(--box-background);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
 }
 
 .earnings-recordContent {
@@ -748,7 +748,7 @@ const copy = async (v) => {
 .footer {
   margin: 20px 0 0;
   --van-cell-group-background: var(--box-background);
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
 }
 
 .footerContent {
@@ -757,7 +757,7 @@ const copy = async (v) => {
   --van-cell-value-color: #EAECEF;
   --van-cell-font-size: 16px;
   --van-cell-active-color: #202730;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
 }
 
 .popupOne {

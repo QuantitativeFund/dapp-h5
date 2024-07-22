@@ -24,7 +24,7 @@
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { isAddress, SigningKey } from "ethers";
 import { showSuccessToast, showFailToast, showLoadingToast } from "vant";
 import axios from "axios";
@@ -98,8 +98,30 @@ async function sign() {
   await load();
   showSuccessToast('签名成功');
 }
-
 load();
+const toggleTheme = () => {
+  const root = document.documentElement;
+  root.style.setProperty('--color-background', '#edf4ff');
+  root.style.setProperty('--color-text', '#2A4057');
+  root.style.setProperty('--box-background', '#ffffff');
+  localStorage.setItem('theme', 'light');
+};
+const toggleTheme2 = () => {
+  const root = document.documentElement;
+  // 切换到深色主题
+  root.style.setProperty('--color-background', '#181818');
+  root.style.setProperty('--color-text', '#ffffff');
+  root.style.setProperty('--box-background', '#262727');
+  localStorage.setItem('theme', 'dark');
+}
+onMounted(() => {
+  const storedTheme = localStorage.getItem('theme');
+  if (storedTheme === 'dark') {
+    toggleTheme2();
+  } else {
+    toggleTheme();
+  }
+});
 </script>
 
 <style scoped>
@@ -123,7 +145,9 @@ load();
 
 .input-address {
   height: 78px;
-  background-color: #29313D;
+  background-color: var(--box-background);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
   margin-top: 12px;
   --van-field-input-text-color: var(--color-text);
   font-size: 17px;
@@ -136,7 +160,7 @@ load();
   text-align: center;
   line-height: 52px;
   font-size: 17px;
-  color: var(--color-text);
+  color: #EEFBFB;
   margin-top: 42px;
   border-radius: 8px;
 }
@@ -144,7 +168,8 @@ load();
 .popup {
   width: 311px;
   height: 286px;
-  background-color: #202730;
+  background-color: var(--box-background);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
   border-radius: 22px;
   /* overflow: hidden; */
   padding: 0 24px;
@@ -153,7 +178,7 @@ load();
 .popup-title {
   margin-top: 22px;
   font-size: 18px;
-  color: #EAECEF;
+  color: var(--color-text);
   text-align: center;
 }
 
@@ -161,11 +186,12 @@ load();
   height: 52px;
   border-radius: 8px;
   margin-top: 29px;
-  background-color: #29313D;
-  color: #555E6B;
+  background-color: var(--box-background);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+  color: var(--color-text);
   font-size: 17px;
   border-radius: 8px;
-  --van-field-input-text-color: #EAECEF;
+  --van-field-input-text-color: var(--color-text);
 }
 
 .confirm-btn {
@@ -188,27 +214,29 @@ load();
 
 .binding-record {
   font-size: 14px;
-  color: #ADB6C4;
+  color: var(--color-text);
   margin-top: 44px;
 }
 
 .bing-content {
-  background-color: #29313D;
+  background-color: var(--box-background);
+  box-shadow: 0 8px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
   margin: 12px 0 0 0;
   --van-cell-group-inset-radius: 12px;
 }
 
 .bing-contentOne {
-  background-color: #29313D;
+  background-color: var(--box-background);
   font-size: 12px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
+  --van-cell-text-color: var(--color-text);
+  --van-cell-value-color: var(--color-text);
 }
 
 .bing-contentTwo {
-  background-color: #29313D;
+  background-color: var(--box-background);
   font-size: 12px;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-text-color: #8D96A4;
+  --van-cell-text-color: var(--color-text);
+  --van-cell-value-color: var(--color-text);
 }
 </style>

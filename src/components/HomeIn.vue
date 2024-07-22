@@ -26,14 +26,14 @@
           <div class="language-icon" style="margin-top: 40px;">
             <div style="position: relative;">
               <img src="../images/moons.png" style="width: 35px; height: 35px;" alt="" @click="toggleTheme">
-              <img src="../images/i-nowChoose.png" alt="" v-show="isDarkTheme == 0"
+              <img src="../images/i-nowChoose.png" alt="" v-show="isDarkTheme == false"
                 style="position: absolute; left: 95%; top: 43%;">
             </div>
           </div>
           <div class="language-icon">
             <div style="position: relative;">
               <img src="../images/moon.png" style="width: 35px; height: 35px;" alt="" @click="toggleTheme2">
-              <img src="../images/i-nowChoose.png" alt="" v-show="isDarkTheme == 1"
+              <img src="../images/i-nowChoose.png" alt="" v-show="isDarkTheme == true"
                 style="position: absolute; left: 95%; top: 43%;">
             </div>
           </div>
