@@ -36,7 +36,7 @@
           </van-cell>
           <van-cell icon="location-o" title="QFT" :value="BigNumber(1.3).toFixed(6)" >
             <template #icon>
-              <img src="/usdt.png" class="cell_icon" alt="qft">
+              <img src="/qft.svg" class="cell_icon" alt="qft">
             </template>
           </van-cell>
         </van-cell-group>
