@@ -21,8 +21,8 @@ export const userStore = defineStore("userStore", {
     set_USDT(usdt) {
       this.USDT = usdt;
     },
-    set_QFT(mnt) {
-      this.MNT = mnt;
+    set_QFT(qft) {
+      this.QFT = qft;
     },
     set_language(v) {
       this.language = v;

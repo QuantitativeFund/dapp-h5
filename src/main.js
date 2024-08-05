@@ -1,56 +1,58 @@
-import { createApp } from "vue";
-import { createPinia } from "pinia";
-import App from "./App.vue";
-import router from "./router";
-import i18n from "./lang";
-
-import "default-passive-events";
-
-global.Buffer = global.Buffer || require("buffer").Buffer;
+import { createApp } from 'vue'
 
 import {
-  Button,
-  Card,
-  Tag,
-  Field,
-  Icon,
-  Badge,
-  Dialog,
-  Image,
-  Switch,
-  Space,
-  Col,
-  Row,
-  Divider,
-  Tab,
-  Tabs,
-  Empty,
-  Cell,
-  CellGroup,
-  RadioGroup,
-  Radio,
-  ActionSheet,
-  PullRefresh,
-  Collapse,
-  CollapseItem,
-  GridItem,
-  Grid,
-  Form,
-  BackTop,
-  NavBar,
-  Popup,
-  Picker,
-  ShareSheet,
-} from "vant";
+    Button,
+    Card,
+    Tag,
+    Field,
+    Icon,
+    Badge,
+    Dialog,
+    Image,
+    Switch,
+    Space,
+    Col,
+    Row,
+    Divider,
+    Tab,
+    Tabs,
+    Empty,
+    Cell,
+    CellGroup,
+    RadioGroup,
+    Radio,
+    ActionSheet,
+    PullRefresh,
+    Collapse,
+    CollapseItem,
+    GridItem,
+    Grid,
+    Form,
+    BackTop,
+    NavBar,
+    Popup,
+    Picker,
+    ShareSheet,
+    Tabbar,
+    TabbarItem,
+  } from "vant"
 
-import "vant/lib/index.css";
-import piniaPluginPersist from "pinia-plugin-persist";
+import 'vant/lib/index.css'
 
-const app = createApp(App);
+import App from './App.vue'
+import { createPinia } from 'pinia'
+import piniaPluginPersist from 'pinia-plugin-persist'
+import router from './router'
+import i18n from './lang'
+
+const app = createApp(App)
+
 const pinia = createPinia();
 pinia.use(piniaPluginPersist);
 app.use(pinia);
 app.use(router);
+app.use(i18n);
+
 app.use(Button);
 app.use(Card);
 app.use(Tag);
@@ -80,8 +82,10 @@ app.use(Grid);
 app.use(Form);
 app.use(BackTop);
 app.use(NavBar);
-app.use(i18n);
 app.use(Popup);
 app.use(Picker);
 app.use(ShareSheet);
-app.mount("#app");
+app.use(Tabbar);
+app.use(TabbarItem);
+
+app.mount('#app')

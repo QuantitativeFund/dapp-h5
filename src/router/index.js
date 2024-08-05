@@ -10,7 +10,7 @@ const router = createRouter({
     {
       path: '/friends',
       name: 'friends',
-      component: () => import('@/views/FriendsView.vue')
+      component: () => import("@/views/FriendsView.vue")
     },
     {
       path: '/mining',
@@ -23,9 +23,9 @@ const router = createRouter({
       component: () => import('@/views/HomeView.vue')
     },
     {
-      path: '/activity',
-      name: 'activity',
-      component: () => import('@/views/ActivityView.vue')
+      path: '/charitable',
+      name: 'charitable',
+      component: () => import('@/views/CharitableView.vue')
     },
     {
       path: '/user',
