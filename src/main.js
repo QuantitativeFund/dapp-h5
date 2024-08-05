@@ -42,6 +42,7 @@ import 'vant/lib/index.css'
 import App from './App.vue'
 import { createPinia } from 'pinia'
 import piniaPluginPersist from 'pinia-plugin-persist'
+import Particles from 'particles.vue3'
 import router from './router'
 import i18n from './lang'
 
@@ -52,6 +53,7 @@ pinia.use(piniaPluginPersist);
 app.use(pinia);
 app.use(router);
 app.use(i18n);
+app.use(Particles)
 
 app.use(Button);
 app.use(Card);

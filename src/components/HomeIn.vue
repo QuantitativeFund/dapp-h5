@@ -3,20 +3,42 @@
     <van-tabs sticky animated swipeable v-model:active="active">
       <van-tab title="个人信息">
         <van-cell-group inset>
-          <van-cell icon="location-o" title="当前地址" :value="addrFormat(user.address)">
+          <van-cell title="当前地址" :value="addrFormat(user.address)">
+            <template #icon>
+              <van-icon name="location-o" color="blue" class="cell_icon" />
+            </template>
             <template #right-icon>
               <AddressCopy :address="user.address"></AddressCopy>
             </template>
           </van-cell>
-          <van-cell icon="cluster-o" title="链接地址" :value="addrFormat(user.p_address)">
+          <van-cell title="链接地址" :value="addrFormat(user.p_address)">
+            <template #icon>
+              <van-icon name="cluster-o" color="red" class="cell_icon" />
+            </template>
             <template #right-icon>
               <AddressCopy :address="user.p_address"></AddressCopy>
             </template>
           </van-cell>
-          <van-cell icon="friends-o" title="链接数量" :value="childs1.length" />
-          <van-cell icon="location-o" title="BNB" :value="BigNumber(1.1).toFixed(6)" />
-          <van-cell icon="location-o" title="USDT" :value="BigNumber(1.2).toFixed(6)" />
-          <van-cell icon="location-o" title="QFT" :value="BigNumber(1.3).toFixed(6)" />
+          <van-cell title="链接数量" :value="childs1.length" >
+            <template #icon>
+              <van-icon name="friends-o" color="green" class="cell_icon" />
+            </template>
+          </van-cell>
+          <van-cell icon="location-o" title="BNB" :value="BigNumber(1.1).toFixed(6)">
+            <template #icon>
+              <img src="/bnb.png" class="cell_icon" alt="bnb">
+            </template>
+          </van-cell>
+          <van-cell icon="location-o" title="USDT" :value="BigNumber(1.2).toFixed(6)" >
+            <template #icon>
+              <img src="/usdt.png" class="cell_icon" alt="usdt">
+            </template>
+          </van-cell>
+          <van-cell icon="location-o" title="QFT" :value="BigNumber(1.3).toFixed(6)" >
+            <template #icon>
+              <img src="/usdt.png" class="cell_icon" alt="qft">
+            </template>
+          </van-cell>
         </van-cell-group>
       </van-tab>
       <van-tab title="待连接">
@@ -69,8 +91,6 @@ const { t } = useI18n();
 
 const user = userStore();
 const active = ref(0);
-const verifyPassword = ref(false);
-const password = ref('');
 
 const loading0 = ref(false);
 const childs0 = ref([]);
