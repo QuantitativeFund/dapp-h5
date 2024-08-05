@@ -1,30 +1,24 @@
 <template>
-
   <van-pull-refresh v-model="loading1" @refresh="load1" style="min-height: 80vh;">
-
     <van-tabs sticky animated swipeable v-model:active="active">
       <van-tab title="个人信息">
-        <van-cell-group inset class="miner-information" :border="false">
-          <van-cell :title="t('HomeIn.invite_address')" :value="addrFormat(user.p_address)" class="miner-informationOne"
-            :border="false">
-            <template #right-icon>
-              <AddressCopy :address="user.p_address"></AddressCopy>
-            </template>
-          </van-cell>
-          <van-cell :title="t('HomeIn.miner_count')" :value="childs1.length" class="miner-informationTwo"
-            :border="false" />
-          <van-cell :title="t('HomeIn.account_address')" :value="addrFormat(user.address)"
-            class="miner-informationThree" :border="false">
+        <van-cell-group inset>
+          <van-cell icon="location-o" title="当前地址" :value="addrFormat(user.address)">
             <template #right-icon>
               <AddressCopy :address="user.address"></AddressCopy>
             </template>
           </van-cell>
-          <van-cell title="USDT" :value="BigNumber(user.USDT).toFixed(4)" class="miner-informationFour"
-            :border="false" />
-          <van-cell title="QFT" :value="BigNumber(user.QFT).toFixed(6)" class="miner-informationFive" :border="false" />
+          <van-cell icon="cluster-o" title="链接地址" :value="addrFormat(user.p_address)">
+            <template #right-icon>
+              <AddressCopy :address="user.p_address"></AddressCopy>
+            </template>
+          </van-cell>
+          <van-cell icon="friends-o" title="链接数量" :value="childs1.length" />
+          <van-cell icon="location-o" title="BNB" :value="BigNumber(1.1).toFixed(6)" />
+          <van-cell icon="location-o" title="USDT" :value="BigNumber(1.2).toFixed(6)" />
+          <van-cell icon="location-o" title="QFT" :value="BigNumber(1.3).toFixed(6)" />
         </van-cell-group>
       </van-tab>
-
       <van-tab title="待连接">
         <template v-for="obj, key in childs0" :key="key">
           <van-cell-group inset :border="false">
@@ -145,5 +139,3 @@ load0();
 load1();
 
 </script>
-
-<style scoped></style>

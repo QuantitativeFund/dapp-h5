@@ -77,8 +77,7 @@ export function addrFormat(addr) {
     return "0x??????...??????";
   }
   if (addr.length == 42 || addr.length == 34) {
-    // return `${addr.substring(0, 6)}...${addr.substring(addr.length - 6)}`;
-    return `${addr.substring(0, 4)}...${addr.substring(addr.length - 4)}`;
+    return `${addr.substring(0, 6)}...${addr.substring(addr.length - 6)}`;
   } else {
     return "0x??????...??????";
   }

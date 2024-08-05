@@ -34,7 +34,11 @@ connectMetaMask().then(async () => {
   });
   
 })
-
 </script>
 
-<style scoped></style>
+<style>
+  .van-cell__value {
+    min-width: 65%;
+  }
+</style>
+
