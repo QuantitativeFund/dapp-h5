@@ -13,7 +13,7 @@
           </van-cell>
           <van-cell title="链接地址" :value="addrFormat(user.p_address)">
             <template #icon>
-              <van-icon name="cluster-o" color="red" class="cell_icon" />
+              <van-icon name="friends-o" color="red" class="cell_icon" />
             </template>
             <template #right-icon>
               <AddressCopy :address="user.p_address"></AddressCopy>
@@ -21,7 +21,7 @@
           </van-cell>
           <van-cell title="链接数量" :value="childs1.length" >
             <template #icon>
-              <van-icon name="friends-o" color="green" class="cell_icon" />
+              <van-icon name="cluster-o" color="green" class="cell_icon" />
             </template>
           </van-cell>
           <van-cell icon="location-o" title="BNB" :value="BigNumber(1.1).toFixed(6)">

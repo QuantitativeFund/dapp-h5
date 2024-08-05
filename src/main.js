@@ -35,6 +35,7 @@ import {
     ShareSheet,
     Tabbar,
     TabbarItem,
+    ConfigProvider,
   } from "vant"
 
 import 'vant/lib/index.css'
@@ -89,5 +90,6 @@ app.use(Picker);
 app.use(ShareSheet);
 app.use(Tabbar);
 app.use(TabbarItem);
+app.use(ConfigProvider);
 
 app.mount('#app')

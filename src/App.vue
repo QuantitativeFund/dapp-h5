@@ -1,13 +1,14 @@
 <template>
-  <Particles id="tsparticles" :particlesInit="particlesInit" :particlesLoaded="particlesLoaded" :options="options" />
-
-  <router-view></router-view>
-  <van-tabbar v-model="active" placeholder>
-    <van-tabbar-item name="friends" icon="friends-o" to="/friends">链接</van-tabbar-item>
-    <van-tabbar-item name="mining" icon="diamond-o" to="/mining">挖矿</van-tabbar-item>
-    <van-tabbar-item name="charitable" icon="like-o" to="/charitable">慈善</van-tabbar-item>
-    <van-tabbar-item name="user" icon="chart-trending-o" to="/user">收益</van-tabbar-item>
-  </van-tabbar>
+  <van-config-provider theme="dark">
+    <Particles id="tsparticles" :particlesInit="particlesInit" :particlesLoaded="particlesLoaded" :options="options" />
+    <router-view></router-view>
+    <van-tabbar v-model="active" placeholder>
+      <van-tabbar-item name="friends" icon="friends-o" to="/friends">链接</van-tabbar-item>
+      <van-tabbar-item name="mining" icon="diamond-o" to="/mining">挖矿</van-tabbar-item>
+      <van-tabbar-item name="charitable" icon="like-o" to="/charitable">慈善</van-tabbar-item>
+      <van-tabbar-item name="user" icon="chart-trending-o" to="/user">收益</van-tabbar-item>
+    </van-tabbar>
+  </van-config-provider>
 </template>
 
 <script setup>
@@ -139,5 +140,4 @@ const particlesLoaded = async container => {
   margin-top: 4px;
   margin-right: 4px;
 }
-
 </style>
