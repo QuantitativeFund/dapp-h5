@@ -8,6 +8,8 @@ export const userStore = defineStore("userStore", {
       BNB: "",
       USDT: "",
       QFT: "",
+      U_Approve: false,
+      Q_Approve: false,
       language: navigator.language == 'zh-CN' ? 'zh' : navigator.language,
     };
   },
@@ -21,8 +23,17 @@ export const userStore = defineStore("userStore", {
     set_USDT(usdt) {
       this.USDT = usdt;
     },
+    set_BNB(bnb) {
+      this.BNB = bnb;
+    },
     set_QFT(qft) {
       this.QFT = qft;
+    },
+    set_USDT_approve(ret) {
+      this.U_Approve = ret;
+    },
+    set_QFT_approve(ret) {
+      this.Q_Approve = ret;
     },
     set_language(v) {
       this.language = v;

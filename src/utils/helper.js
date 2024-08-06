@@ -1,6 +1,6 @@
 import moment from "moment";
-import { keccak256, solidityPacked, toUtf8Bytes, AbiCoder } from "ethers";
-import { ethers, formatEther } from "ethers";
+import { ethers, formatEther,keccak256, solidityPacked, toUtf8Bytes, AbiCoder } from "ethers";
+import { Provider } from "@/utils/metamask.js";
 import { config } from "@/const/config";
 import { userStore } from "@/stores/user.js";
 
@@ -119,66 +119,52 @@ export async function LoadUserUSDT() {
   const usdt = new ethers.Contract(
     config.usdt_addr,
     config.erc20,
-    new ethers.JsonRpcProvider(config.rpc)
+    Provider
   );
   const ret = formatEther(await usdt.balanceOf(user.address));
   user.set_USDT(ret);
 }
 
-export async function LoadUserMNT() {
+export async function LoadUserQFT() {
   const user = userStore();
-  const provide = new ethers.JsonRpcProvider(config.rpc);
-  const ret = formatEther(await provide.getBalance(user.address));
+  const usdt = new ethers.Contract(
+    config.qft_addr,
+    config.erc20,
+    Provider
+  );
+  const ret = formatEther(await usdt.balanceOf(user.address));
+  user.set_USDT(ret);
+}
+
+export async function LoadUserBNB() {
+  const user = userStore();
+  const ret = formatEther(await Provider.getBalance(user.address));
   user.set_MNT(ret);
 }
 
 export async function InitUser() {
-  const provide = new ethers.JsonRpcProvider(config.rpc);
   const user = userStore();
   const popularized = new ethers.Contract(
     config.popularized_addr,
     config.popularized,
-    provide
+    Provider
   );
   let ret = await popularized.spreads(user.address);
   user.set_paddress(ret.parent);
 
-  const USDT = new ethers.Contract(config.usdt_addr, config.erc20, provide);
+  const USDT = new ethers.Contract(config.usdt_addr, config.erc20, Provider);
   ret = formatEther(await USDT.balanceOf(user.address));
   user.set_USDT(ret);
   user.set_USDT_approve(
-    (await USDT.allowance(user.address, config.buy_addr)) == ethers.MaxUint256
+    (await USDT.allowance(user.address, config.activity_addr)) == ethers.MaxUint256
   );
-  ret = formatEther(await provide.getBalance(user.address));
-  user.set_MNT(ret);
-}
 
-export function AddrName(a) {
-  if (a.toLowerCase() == config.usdt_addr.toLowerCase()) {
-    return "usdt";
-  } else if (a.toLowerCase() == config.router02_addr.toLowerCase()) {
-    return "swap";
-  } else if (a.toLowerCase() == config.mining_addr.toLowerCase()) {
-    return "miner";
-  } else if (a.toLowerCase() == config.buy_addr.toLowerCase()) {
-    return "buy";
-  } else if (a.toLowerCase() == config.bridge.toLowerCase()) {
-    return "bridge";
-  } else if (a.toLowerCase() == config.popularized_addr.toLowerCase()) {
-    return "bind";
-  } else if (a.toLowerCase() == config.weth_addr.toLowerCase()) {
-    return "weth";
-  } else if (a.toLowerCase() == config.pair_addr.toLowerCase()) {
-    return "mnt-usdt";
-  } else if (a.toLowerCase() == config.xh_addr.toLowerCase()) {
-    return "xh";
-  } else if (a.toLowerCase() == config.lucky_addr.toLowerCase()) {
-    return "lucky";
-  } else if (a.toLowerCase() == config.flowers_addr.toLowerCase()) {
-    return "flowers";
-  } else if (a.toLowerCase() == config.dragon_addr.toLowerCase()) {
-    return "dragon";
-  } else {
-    return a;
-  }
+  const QFT = new ethers.Contract(config.qft_addr, config.erc20, Provider);
+  ret = formatEther(await QFT.balanceOf(user.address));
+  user.set_QFT(ret);
+  user.set_QFT_approve(
+    (await QFT.allowance(user.address, config.activity_addr)) == ethers.MaxUint256
+  );
+  ret = formatEther(await Provider.getBalance(user.address));
+  user.set_BNB(ret);
 }

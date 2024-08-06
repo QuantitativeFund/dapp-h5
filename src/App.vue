@@ -17,6 +17,7 @@ import Particles from '@/components/Particles.vue';
 import { ref, } from 'vue';
 import { ethers } from 'ethers';
 
+import { InitUser } from "@/utils/helper.js";
 import { connectMetaMask, getAccount, Provider } from "@/utils/metamask.js";
 
 import { config } from '@/const/config';
@@ -34,6 +35,7 @@ connectMetaMask().then(async () => {
   );
   popularized.spreads(user.address).then((ret) => {
     user.set_paddress(ret.parent);
+    InitUser();
     console.log("====", ret.parent);
   });
 })
