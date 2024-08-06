@@ -43,7 +43,7 @@ connectMetaMask().then(async () => {
 
 <style>
 .van-cell__value {
-  min-width: 65%;
+  min-width: 60%;
 }
 
 .cell_icon {

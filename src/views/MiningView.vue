@@ -72,12 +72,48 @@
       </van-tab>
       <van-tab title="算力明细">
         <van-cell-group inset>
-          <van-cell title="全局周期" :value="Number(epoch)" />
-          <van-cell title="个人周期" :value="Number(info.epoch)" />
-          <van-cell title="全局算力" :value="BigNumber(ethers.formatEther(whole_power)).toFixed(4)" />
-          <van-cell title="个人算力" :label="`百分比: ${percentage(info.real_power, whole_power)}%`"
+          <van-cell title="空投数量" :value="BigNumber(ethers.formatEther(info.airdrop)).toFixed(6)" />
+          <van-cell title="投票数量" :value="BigNumber(ethers.formatEther(info.vote)).toFixed(6)" />
+          <van-cell title="基本算力" label="(投票+空投)^1.125/100"
+            :value="BigNumber(ethers.formatEther(info.vote_power)).toFixed(6)" />
+          <van-cell title="撤投数量" :value="BigNumber(ethers.formatEther(info.out_vote)).toFixed(6)" />
+          <van-cell title="撤投高度" :label="`当前高度:${bn}`" :value="Number(info.out_height)" />
+          <van-cell title="个人周期" :label="`全局周期:${Number(epoch)}`" :value="Number(info.epoch)" />
+          <van-cell title="提交算力" :label="`百分比: ${percentage(info.real_power, whole_power)}%`"
             :value="BigNumber(ethers.formatEther(info.real_power)).toFixed(4)" />
+          <van-cell title="全局算力" :value="BigNumber(ethers.formatEther(whole_power)).toFixed(4)" />
         </van-cell-group>
+
+        <template v-for="obj, key in minings" :key="key">
+          <br />
+          <van-cell-group inset>
+            <van-cell :title="getTitle(key)" :value="getValue(key)">
+              <template #icon>
+                <van-icon :name="key == 1 ? 'user-o' : 'like-o'" :color="getColor(key)" class="cell_icon" />
+              </template>
+            </van-cell>
+            <van-cell title="贡献百分比" :value="get_percentage(key)">
+              <template #icon>
+                <van-icon name="info-o" :color="getColor(key)" class="cell_icon" />
+              </template>
+            </van-cell>
+            <van-cell title="基本算力" :value="BigNumber(ethers.formatEther(obj.info.vote_power)).toFixed(4)">
+              <template #icon>
+                <van-icon :name="getIcon(key)" :color="getColor(key)" class="cell_icon" />
+              </template>
+            </van-cell>
+
+            <van-cell title="链接地址" :value="addrFormat(obj.addr)">
+              <template #icon>
+                <van-icon name="friends-o" :color="getColor(key)" class="cell_icon" />
+              </template>
+              <template #right-icon>
+                <AddressCopy :address="obj.addr"></AddressCopy>
+              </template>
+            </van-cell>
+
+          </van-cell-group>
+        </template>
       </van-tab>
     </van-tabs>
   </van-pull-refresh>
@@ -91,7 +127,8 @@ import { Provider, Singer } from "@/utils/metamask.js";
 import { ethers } from "ethers";
 import { useI18n } from "vue-i18n";
 import { config } from "../const/config";
-import { LoadUserQFT, percentage } from "../utils/helper";
+import { LoadUserQFT, percentage, addrFormat } from "../utils/helper";
+import AddressCopy from '@/components/AddressCopy.vue';
 
 const { t } = useI18n();
 const user = userStore();
@@ -113,6 +150,72 @@ const whole_power = ref(0);
 const real_power = ref(0);
 
 const info = ref({ airdrop: 0, vote: 0, vote_power: 0, real_power: 0, out_vote: 0, out_height: 0, epoch: 0 });
+
+function getTitle(key) {
+  if (key == 0) {
+    return "上级贡献";
+  } else if (key == 1) {
+    return "自身贡献";
+  } else {
+    return `下级${key - 1}贡献`;
+  }
+}
+
+function getValue(key) {
+  let vp = minings.value[1].info.vote_power;
+  if (key == 0) {
+    if (minings.value[0].info.vote_power < vp) {
+      vp = minings.value[0].info.vote_power;
+    }
+  } else if (key == 1) {
+    vp = vp * 6n;
+  } else {
+    if (minings.value[key].info.vote_power < vp) {
+      vp = minings.value[key].info.vote_power;
+    }
+  }
+  return `${BigNumber(ethers.formatEther(vp)).times(6).toFixed(6)}`;
+}
+
+function get_percentage(key) {
+  let vp = minings.value[1].info.vote_power;
+  if (key == 1) {
+    vp = vp * 6n;
+  } else {
+    if (minings.value[key].info.vote_power < vp) {
+      vp = minings.value[key].info.vote_power;
+    }
+  }
+  return `${percentage(vp, real_power.value)}%`;
+}
+
+function getIcon(key) {
+  let vp = minings.value[1].info.vote_power;
+  if (key == 1) {
+    return "user-circle-o";
+  } else {
+    if (minings.value[key].info.vote_power < vp) {
+      return "down";
+      //return "good-job-o";
+    } else {
+      return "good-job-o";
+    }
+  }
+}
+
+function getColor(key) {
+  let vp = minings.value[1].info.vote_power;
+  if (key == 1) {
+    return "green";
+  } else {
+    if (minings.value[key].info.vote_power < vp) {
+      //return "gold";
+      return "red";
+    } else {
+      return "gold";
+    }
+  }
+}
 
 async function load() {
 
