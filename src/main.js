@@ -36,6 +36,7 @@ import {
     Tabbar,
     TabbarItem,
     ConfigProvider,
+    CountDown
   } from "vant"
 
 import 'vant/lib/index.css'
@@ -91,5 +92,6 @@ app.use(ShareSheet);
 app.use(Tabbar);
 app.use(TabbarItem);
 app.use(ConfigProvider);
+app.use(CountDown);
 
 app.mount('#app')

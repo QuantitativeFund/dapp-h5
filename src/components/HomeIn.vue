@@ -24,17 +24,17 @@
               <van-icon name="cluster-o" color="green" class="cell_icon" />
             </template>
           </van-cell>
-          <van-cell icon="location-o" title="BNB" :value="BigNumber(user.BNB).toFixed(6)">
+          <van-cell title="BNB" :value="BigNumber(user.BNB).toFixed(6)">
             <template #icon>
               <img src="/bnb.png" class="cell_icon" alt="bnb">
             </template>
           </van-cell>
-          <van-cell icon="location-o" title="USDT" :value="BigNumber(user.USDT).toFixed(6)">
+          <van-cell title="USDT" :value="BigNumber(user.USDT).toFixed(6)">
             <template #icon>
               <img src="/usdt.png" class="cell_icon" alt="usdt">
             </template>
           </van-cell>
-          <van-cell icon="location-o" title="QFT" :value="BigNumber(user.QFT).toFixed(6)">
+          <van-cell title="QFT" :value="BigNumber(user.QFT).toFixed(6)">
             <template #icon>
               <img src="/qft.svg" class="cell_icon" alt="qft">
             </template>

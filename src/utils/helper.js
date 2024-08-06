@@ -1,8 +1,9 @@
 import moment from "moment";
-import { ethers, formatEther,keccak256, solidityPacked, toUtf8Bytes, AbiCoder } from "ethers";
+import { ethers, formatEther, keccak256, solidityPacked, toUtf8Bytes, AbiCoder } from "ethers";
 import { Provider } from "@/utils/metamask.js";
 import { config } from "@/const/config";
 import { userStore } from "@/stores/user.js";
+import BigNumber from "bignumber.js";
 
 export function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -114,6 +115,10 @@ export function signParams(chainId, popularized_addr, p_addr, addr) {
   return msgParams;
 }
 
+export function percentage(A, B) {
+  return BigNumber(ethers.formatEther(A)).times(100).div(BigNumber(ethers.formatEther(B))).toFixed(4);
+}
+
 export async function LoadUserUSDT() {
   const user = userStore();
   const usdt = new ethers.Contract(
@@ -155,16 +160,15 @@ export async function InitUser() {
   const USDT = new ethers.Contract(config.usdt_addr, config.erc20, Provider);
   ret = formatEther(await USDT.balanceOf(user.address));
   user.set_USDT(ret);
-  user.set_USDT_approve(
-    (await USDT.allowance(user.address, config.activity_addr)) == ethers.MaxUint256
-  );
+  ret = await USDT.allowance(user.address, config.activity_addr);
+  user.set_USDT_approve(ret == ethers.MaxUint256);
 
   const QFT = new ethers.Contract(config.qft_addr, config.erc20, Provider);
   ret = formatEther(await QFT.balanceOf(user.address));
   user.set_QFT(ret);
-  user.set_QFT_approve(
-    (await QFT.allowance(user.address, config.activity_addr)) == ethers.MaxUint256
-  );
+  ret = await QFT.allowance(user.address, config.mining_addr);
+  //console.log(ret, ethers.MaxUint256, ret == ethers.MaxUint256);
+  user.set_QFT_approve(ret == ethers.MaxUint256);
   ret = formatEther(await Provider.getBalance(user.address));
   user.set_BNB(ret);
 }

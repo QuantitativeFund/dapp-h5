@@ -2,11 +2,13 @@ import abi_erc20 from './erc20.json';
 import abi_popularized from './popularized.json';
 import abi_mining from './mining.json';
 import abi_activity from './activity.json';
+import abi_helper from './helper.json';
 
 const config = {
     erc20: abi_erc20,
     popularized: abi_popularized,
     mining: abi_mining,
+    helper: abi_helper,
     activity: abi_activity,
     
     qft_addr: '0x79a82fC67600bdB9aa8944c446e00dafeFF63032',
@@ -14,7 +16,7 @@ const config = {
     popularized_addr: '0x5eBa1fAd5af6b9ac040b37554eF419065e6774d3',
     mining_addr: '0x8934C6382372Eb445FAcAf242Af0f3a7923875F6',
     activity_addr: '0x9B58346907f5945493D265A4332Bc3A9d96308F2',
-
+    helper_addr: '0xb90C8f0D2B9e92E2F593A71Fa84ba9330193CB5E',
     //chainId: "0xcc",
     chainId: "0xb63f",
 

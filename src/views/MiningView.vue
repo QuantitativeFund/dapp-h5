@@ -1,451 +1,300 @@
 <template>
-   与原来的功能相同，保证界面与以前风格不同
+  <van-pull-refresh v-model="loading" @refresh="load" style="min-height: 80vh;">
+    <van-tabs sticky animated swipeable v-model:active="active">
+      <van-tab title="挖矿">
+        <van-cell-group inset>
+          <van-cell title="预计挖矿收益" :value="income" />
+          <van-cell title="挖矿倒计时">
+            <template #icon>
+              <van-icon name="diamond-o" color="gold" class="cell_icon" />
+            </template>
+            <template #title>
+              <van-count-down :time="cd_mining" format="DD day HH:mm:ss" />
+            </template>
+            <template #value>
+              <van-button type="success" @click="voteMining" :disabled="voteMiningStr == '提交'" size="small">{{
+                voteMiningStr }}</van-button>
+            </template>
+          </van-cell>
+
+          <van-cell title="QFT" :value="BigNumber(user.QFT).toFixed(6)">
+            <template #icon>
+              <img src="/qft.svg" class="cell_icon" alt="qft">
+            </template>
+          </van-cell>
+
+          <van-field label="投票数量" type="number" v-model="vote_in" placeholder="请输入投票数量" />
+          <van-cell title="投票">
+            <template #icon>
+              <van-icon name="plus" color="green" class="cell_icon" />
+            </template>
+            <template #value>
+              <van-space>
+                <van-button type="primary" v-show="user.Q_Approve == false" @click="QFT_Approve"
+                  size="small">授权</van-button>
+                <van-button type="primary" :disabled="user.Q_Approve == false" @click="voteIn"
+                  size="small">投票</van-button>
+              </van-space>
+            </template>
+          </van-cell>
+          <van-cell title="已投数量" :value="BigNumber(ethers.formatEther(info.vote)).toFixed(6)">
+            <template #icon>
+              <van-icon name="plus" class="cell_icon" />
+            </template>
+          </van-cell>
+          <van-field label="撤投数量" type="number" v-model="vote_out" placeholder="请输入撤投数量" />
+          <van-cell title="撤投">
+            <template #icon>
+              <van-icon name="minus" color="red" class="cell_icon" />
+            </template>
+            <template #value>
+              <van-button type="primary" @click="voteOut1" size="small">撤投</van-button>
+            </template>
+          </van-cell>
+          <van-cell v-show="info.out_vote > 0" title="已撤数量"
+            :value="BigNumber(ethers.formatEther(info.out_vote)).toFixed(6)">
+            <template #icon>
+              <van-icon name="minus" class="cell_icon" />
+            </template>
+          </van-cell>
+          <van-cell v-show="info.out_vote > 0">
+            <template #icon>
+              <van-icon name="diamond-o" color="gold" class="cell_icon" />
+            </template>
+            <template #title>
+              <van-count-down :time="cd_out2" format="DD day HH:mm:ss" />
+            </template>
+            <template #value>
+              <van-button type="success" :disabled="cd_out2 > 0" @click="voteOut2" size="small">领取撤投</van-button>
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-tab>
+      <van-tab title="算力明细">
+        <van-cell-group inset>
+          <van-cell title="全局周期" :value="Number(epoch)" />
+          <van-cell title="个人周期" :value="Number(info.epoch)" />
+          <van-cell title="全局算力" :value="BigNumber(ethers.formatEther(whole_power)).toFixed(4)" />
+          <van-cell title="个人算力" :label="`百分比: ${percentage(info.real_power, whole_power)}%`"
+            :value="BigNumber(ethers.formatEther(info.real_power)).toFixed(4)" />
+        </van-cell-group>
+      </van-tab>
+    </van-tabs>
+  </van-pull-refresh>
 </template>
 <script setup>
+import { ref, computed, registerRuntimeCompiler } from "vue";
+import { showSuccessToast, showFailToast, showLoadingToast } from 'vant';
+import BigNumber from 'bignumber.js';
+import { userStore } from '@/stores/user.js';
+import { Provider, Singer } from "@/utils/metamask.js";
+import { ethers } from "ethers";
+import { useI18n } from "vue-i18n";
+import { config } from "../const/config";
+import { LoadUserQFT, percentage } from "../utils/helper";
+
+const { t } = useI18n();
+const user = userStore();
+
+const active = ref(0);
+
+const loading = ref(false);
+
+const cd_mining = ref(0);
+const cd_out2 = ref(0);
+
+const minings = ref([]);
+const bn = ref(0);
+const begin = ref(0);
+const epoch = ref(0);
+const epoch_height = ref(0);
+const totalSupply = ref(0);
+const whole_power = ref(0);
+const real_power = ref(0);
+
+const info = ref({ airdrop: 0, vote: 0, vote_power: 0, real_power: 0, out_vote: 0, out_height: 0, epoch: 0 });
+
+async function load() {
+
+  const helper = new ethers.Contract(config.helper_addr, config.helper, Provider);
+
+  helper.MiningInfo(user.address).then((ret) => {
+    minings.value = ret.infos;
+
+    bn.value = ret.bn;
+    begin.value = ret.begin;
+    epoch.value = ret.epoch;
+    epoch_height.value = ret.epoch_height;
+    totalSupply.value = ret.totalSupply;
+    whole_power.value = ret.whole_power;
+    real_power.value = ret.real_power;
+
+    info.value.airdrop = ret.infos[1].info.airdrop;
+    info.value.vote = ret.infos[1].info.vote;
+    info.value.vote_power = ret.infos[1].info.vote_power;
+    info.value.real_power = ret.infos[1].info.real_power;
+    info.value.out_vote = ret.infos[1].info.out_vote;
+    info.value.out_height = ret.infos[1].info.out_height;
+    info.value.epoch = ret.infos[1].info.epoch;
+
+    cd_mining.value = BigNumber(epoch.value)
+      .times(epoch_height.value)
+      .plus(begin.value)
+      .minus(bn.value)
+      .times(1000)
+      .toNumber();
+    if (cd_mining.value < 0) {
+      cd_mining.value = 0;
+    }
+    const v = (info.value.out_height + epoch_height.value * 2n - bn.value) * 1000n;
+    if (v > 0) {
+      cd_out2.value = Number(v);
+    } else {
+      cd_out2.value = 0;
+    }
+    loading.value = false;
+  });
+}
+
+
+const voteMiningStr = computed(() => {
+  if (info.value.epoch == 0) {
+    return "启动挖矿";
+  }
+  if (epoch.value > info.value.epoch) {
+    return "领取收益";
+  }
+  // < 
+  if (BigNumber(info.value.epoch).times(epoch_height.value).plus(begin.value).lt(bn.value)) {
+    return "领取收益";
+  } else {
+    if (info.value.real_power >= real_power.value) {
+      // 按钮禁用
+      return "提交";
+    } else {
+      return "提交算力";
+    }
+  }
+});
+
+const income = computed(() => {
+  if (whole_power.value > 0) {
+    const height_profit = new BigNumber(1);
+    const ret = new BigNumber(
+      height_profit.times(epoch_height.value).times(info.value.real_power)
+    ).div(whole_power.value);
+    return `${ret.toFixed(4)}`;
+  } else {
+    return "NaN";
+  }
+});
+
+async function QFT_Approve() {
+  showLoadingToast({
+    message: t("Common.submitting"),
+    forbidClick: true,
+    duration: 0,
+  })
+
+  const QFT = new ethers.Contract(config.qft_addr, config.erc20, Singer);
+  const tx = await QFT.approve(config.mining_addr, ethers.MaxUint256);
+  tx.wait().then(async () => {
+    user.set_QFT_approve(true);
+    showSuccessToast('授权成功');
+  });
+}
+
+async function voteMining() {
+  showLoadingToast({
+    message: t("Common.submitting"),
+    forbidClick: true,
+    duration: 0,
+  })
+  try {
+    const Mining = new ethers.Contract(config.mining_addr, config.mining, Singer);
+    const tx = await Mining.voteMining();
+    tx.wait().then(async () => {
+      load();
+      LoadUserQFT();
+      showSuccessToast('挖矿成功');
+    });
+  } catch (err) {
+    console.log(err);
+    showFailToast('挖矿失败');
+  }
+}
+
+const vote_in = ref(0);
+async function voteIn() {
+  if (ethers.parseEther(user.QFT.toString()) < ethers.parseEther(vote_in.value.toString())) {
+    showFailToast("投票金额过大");
+    return;
+  }
+  showLoadingToast({
+    message: t("Common.submitting"),
+    forbidClick: true,
+    duration: 0,
+  })
+  try {
+    const Mining = new ethers.Contract(config.mining_addr, config.mining, Singer);
+    const tx = await Mining.voteIn(ethers.parseEther(vote_in.value.toString()));
+    tx.wait().then(async () => {
+      vote_in.value = 0;
+      load();
+      LoadUserQFT();
+      showSuccessToast('投票成功');
+    });
+  } catch (err) {
+    console.log(err);
+    showFailToast('投票失败');
+  }
+}
+
+const vote_out = ref(0);
+async function voteOut1() {
+  if (info.value.vote < ethers.parseEther(vote_out.value.toString())) {
+    showFailToast("撤投金额过大");
+    return;
+  }
+  showLoadingToast({
+    message: t("Common.submitting"),
+    forbidClick: true,
+    duration: 0,
+  })
+  try {
+    const Mining = new ethers.Contract(config.mining_addr, config.mining, Singer);
+    const tx = await Mining.voteOut1(ethers.parseEther(vote_out.value.toString()));
+    tx.wait().then(async () => {
+      vote_out.value = 0;
+      load();
+      showSuccessToast('撤投成功');
+    });
+  } catch (err) {
+    console.log(err);
+    showFailToast('撤投失败');
+  }
+}
+
+async function voteOut2() {
+  showLoadingToast({
+    message: t("Common.submitting"),
+    forbidClick: true,
+    duration: 0,
+  })
+  try {
+    const Mining = new ethers.Contract(config.mining_addr, config.mining, Singer);
+    const tx = await Mining.voteOut2();
+    tx.wait().then(async () => {
+      load();
+      LoadUserQFT();
+      showSuccessToast('领取成功');
+    });
+  } catch (err) {
+    console.log(err);
+    showFailToast('领取失败');
+  }
+}
+
+load();
 
 </script>
-
-<style scoped>
-.box {
-  background-color: #202730;
-  padding: 0 24px;
-  min-height: 100vh;
-}
-
-.title {
-  height: 60px;
-  font-size: 18px;
-  color: #EAECEF;
-  line-height: 60px;
-}
-
-.mining-information {
-  margin: 0;
-  --van-cell-group-inset-radius: 12px;
-  background-color: #29313D;
-}
-
-.mining-informationOne {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #ADB6C4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-  --van-cell-active-color: #29313D;
-}
-
-.mining-informationTwo {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #ADB6C4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-  --van-cell-active-color: #29313D;
-}
-
-.mining-informationThree {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #ADB6C4;
-  --van-cell-border-color: #29313D;
-  --van-cell-active-color: #29313D;
-}
-
-.voting-information {
-  --van-popup-background: #202730;
-  --van-popup-round-radius: 22px;
-  padding: 14px 24px 0;
-}
-
-.vote-title {
-  font-size: 18px;
-  color: #EAECEF;
-  text-align: center;
-}
-
-.vote-content {
-  margin: 17px 0 0 0;
-  --van-cell-group-inset-radius: 12px;
-  background-color: #29313D;
-}
-
-.vote-contentOne {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.vote-contentTwo {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.vote-contentThree {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.vote-contentFour {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.vote-contentFive {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.vote-contentSix {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.vote-contentSeven {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.vote-contentEight {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.close-btn {
-  margin: 32px 0 40px;
-  height: 52px;
-  border-radius: 8px;
-  font-size: 17px;
-  color: #EEFBFB;
-  text-align: center;
-  line-height: 52px;
-  background-color: #1FAAA8;
-}
-
-.global-information {
-  background-color: #202730;
-  padding: 13px 24px 0;
-}
-
-.global-title {
-  font-size: 18px;
-  color: #EAECEF;
-  text-align: center;
-}
-
-.global-content {
-  margin: 17px 0 0 0;
-  --van-cell-group-inset-radius: 12px;
-  background-color: #29313D;
-}
-
-.global-contentOne {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.global-contentTwo {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.global-contentThree {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.global-contentFour {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.contribution-details {
-  background-color: #202730;
-  padding: 14px 18px 0;
-}
-
-.contribution-title {
-  font-size: 18px;
-  color: #EAECEF;
-  text-align: center;
-}
-
-.contribution-contentOne {
-  font-size: 16px;
-  color: #ADB6C4;
-  margin-top: 10px;
-}
-
-.contribution-contentTwo {
-  margin: 12px 0 0 0;
-  --van-cell-group-inset-radius: 12px;
-  background-color: #29313D;
-}
-
-.contribution-contentTwo-itemOne {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-}
-
-.switch-vote {
-  margin: 0;
-  background-color: #29313D;
-  padding: 0 16px;
-}
-
-.switch-vote-content {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.switch-vote-contentTwo {
-  font-size: 16px;
-  color: #8D96A4;
-}
-
-.input-tailText {
-  font-size: 16px;
-  color: #EAECEF;
-  position: absolute;
-  right: 7%;
-  top: 30%;
-}
-
-.vote-btn {
-  height: 42px;
-  background-color: #1FAAA8;
-  border-radius: 8px;
-  font-size: 17px;
-  color: #EEFBFB;
-  text-align: center;
-  line-height: 42px;
-  margin-top: 22px;
-  margin-bottom: 26px;
-}
-
-.switch-withdraw {
-  margin: 0;
-  padding: 0 16px;
-  background-color: #29313D;
-}
-
-.switch-withdraw-content {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  --van-cell-border-color: #29313D;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.switch-withdraw-contentTwo {
-  font-size: 16px;
-  color: #8D96A4;
-}
-
-.input-UNMNT {
-  background-color: #202730;
-  --van-field-input-text-color: #EAECEF;
-  border-radius: 8px;
-  margin-top: 13px;
-  --van-field-placeholder-text-color: #555E6B;
-  position: static;
-}
-
-.withdraw-btn {
-  height: 42px;
-  background-color: #1FAAA8;
-  border-radius: 8px;
-  font-size: 17px;
-  color: #EEFBFB;
-  text-align: center;
-  line-height: 42px;
-  margin-top: 22px;
-  margin-bottom: 26px;
-}
-
-.mining-title {
-  font-size: 16px;
-  color: #ADB6C4;
-  margin-top: 18px;
-}
-
-.mining-content {
-  margin: 12px 0 0;
-  background-color: #29313D;
-  padding: 0 16px;
-}
-
-.mining-contentItem {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.submit-btn {
-  width: 100%;
-  display: block;
-  height: 42px;
-  background-color: #1FAAA8;
-  border-radius: 8px;
-  font-size: 17px;
-  color: #EEFBFB;
-  text-align: center;
-  line-height: 42px;
-  margin-top: 22px;
-  margin-bottom: 26px;
-  border: none
-}
-
-.withdraw-content {
-  margin: 12px 0 0;
-  background-color: #29313D;
-  padding: 0 16px;
-}
-
-.withdraw-contentItem {
-  --van-cell-background: #29313D;
-  font-size: 16px;
-  --van-cell-text-color: #8D96A4;
-  --van-cell-value-color: #EAECEF;
-  padding-left: 0;
-  padding-right: 0;
-}
-
-.withdrawal-btn {
-  width: 100%;
-  display: block;
-  height: 42px;
-  background-color: #1FAAA8;
-  border-radius: 8px;
-  font-size: 17px;
-  color: #EEFBFB;
-  text-align: center;
-  line-height: 42px;
-  margin-top: 22px;
-  margin-bottom: 26px;
-  border: none
-}
-
-.switch-title {
-  font-size: 14px;
-  color: #ADB6C4;
-  margin-top: 18px;
-}
-
-.conversion-quantity {
-  font-size: 12px;
-  color: #8D96A4;
-  margin-top: 6px;
-}
-
-.input_transfer_number {
-  height: 40px;
-  --van-field-input-text-color: #EAECEF;
-  --van-field-placeholder-text-color: #555E6B;
-  font-size: 12px;
-  border-radius: 8px;
-  background-color: #202730;
-  margin-top: 12px;
-}
-
-.popup {
-  width: 311px;
-  height: 286px;
-  background-color: #202730;
-  border-radius: 22px;
-  /* overflow: hidden; */
-  padding: 0 24px;
-}
-
-.popup-title {
-  margin-top: 22px;
-  font-size: 18px;
-  color: #EAECEF;
-  text-align: center;
-}
-
-.input-password {
-  height: 52px;
-  border-radius: 8px;
-  margin-top: 29px;
-  background-color: #29313D;
-  color: #555E6B;
-  font-size: 17px;
-  border-radius: 8px;
-  --van-field-input-text-color: #EAECEF;
-}
-
-.confirm-btn {
-  height: 42px;
-  background-color: #1FAAA8;
-  font-size: 17px;
-  color: #EEFBFB;
-  margin-top: 35px;
-  text-align: center;
-  line-height: 42px;
-  border-radius: 8px;
-}
-
-.cancel-btn {
-  text-align: center;
-  margin-top: 25px;
-  font-size: 17px;
-  color: #1FAAA8;
-}
-
-.input-mnt {
-  --van-field-input-text-color: #EAECEF;
-  --van-field-placeholder-text-color: #555E6B;
-  border-radius: 8px;
-  height: 50px;
-  background-color: #202730;
-  margin-top: 13px;
-}
-</style>
