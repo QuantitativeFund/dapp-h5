@@ -1,28 +1,40 @@
 <template>
-  
- <div class="box">
-    <div class="title">朋友</div>
-    <div class="bind-inviter">绑定邀请人，请输入邀请人地址</div>
-    <van-field required maxlength="42" type="textarea" v-model="p_addr" :placeholder="t('HomeOut.address_placeholder')"
-               autocomplete="off" class="input-address" :border="false" />
-    <div class="apply-binding" @click="sign">申请绑定</div>
-    <div class="binding-record">申请绑定记录</div>
-    <template v-for="(obj, key) in signs" :key="key">
-      <van-cell-group class="bing-content" :border="false" inset>
-        <van-cell title="邀请人地址" :value="addrFormat(obj.p_addr)" class="bing-contentOne"
-                  :border="false">
-          <template #right-icon>
-            <AddressCopy :address="obj.p_addr"></AddressCopy>
-          </template>
-        </van-cell>
-
-        <van-cell title="申请绑定时间" :value="timeFormat(obj.sign_utc)"
-                  class="bing-contentTwo" :border="false" />
-      </van-cell-group>
-      <br />
-    </template>
-  </div>
-
+  <van-pull-refresh v-model="loading" @refresh="load" style="min-height: 80vh;">
+    <van-tabs sticky animated swipeable v-model:active="active">
+      <van-tab title="链接申请">
+        <van-cell-group inset>
+          <van-field label="链接地址" required maxlength="42" type="textarea" v-model="p_addr" placeholder="请输入链接地址"
+            autocomplete="off" />
+          <van-cell>
+            <template #value>
+              <van-button type="primary" round @click="sign">申请</van-button>
+            </template>
+          </van-cell>
+        </van-cell-group>
+      </van-tab>
+      <van-tab title="申请记录">
+        <van-empty description="无数据" v-show="signs.length == 0" />
+        <template v-for="(obj, key) in signs" :key="key">
+          <van-cell-group inset>
+            <van-cell title="链接地址" :value="addrFormat(obj.p_addr)">
+              <template #icon>
+                <van-icon name="cluster-o" color="green" class="cell_icon" />
+              </template>
+              <template #right-icon>
+                <AddressCopy :address="obj.p_addr"></AddressCopy>
+              </template>
+            </van-cell>
+            <van-cell title="申请时间" :value="timeFormat(obj.sign_utc)">
+              <template #icon>
+                <van-icon name="underway-o" color="green" class="cell_icon" />
+              </template>
+            </van-cell>
+          </van-cell-group>
+          <br />
+        </template>
+      </van-tab>
+    </van-tabs>
+  </van-pull-refresh>
 </template>
 
 <script setup>
@@ -43,7 +55,7 @@ import { ethers } from "ethers";
 import { useI18n } from "vue-i18n";
 import AddressCopy from "@/components/AddressCopy.vue";
 import { Provider } from "@/utils/metamask.js";
-
+const active = ref(0);
 const { t } = useI18n();
 const loading = ref(false);
 const p_addr = ref("");
@@ -98,11 +110,9 @@ async function sign() {
   const ret0 = await axios.post(`${config.api}friends/${user.address}`, obj);
   console.log(ret0.data);
   await load();
+  p_addr.value = "";
   showSuccessToast('签名成功');
 }
 
 load();
 </script>
-
-<style scoped>
-</style>
