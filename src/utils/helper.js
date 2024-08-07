@@ -138,13 +138,13 @@ export async function LoadUserQFT() {
     Provider
   );
   const ret = formatEther(await usdt.balanceOf(user.address));
-  user.set_USDT(ret);
+  user.set_QFT(ret);
 }
 
 export async function LoadUserBNB() {
   const user = userStore();
   const ret = formatEther(await Provider.getBalance(user.address));
-  user.set_MNT(ret);
+  user.set_BNB(ret);
 }
 
 export async function InitUser() {
@@ -160,7 +160,7 @@ export async function InitUser() {
   const USDT = new ethers.Contract(config.usdt_addr, config.erc20, Provider);
   ret = formatEther(await USDT.balanceOf(user.address));
   user.set_USDT(ret);
-  ret = await USDT.allowance(user.address, config.activity_addr);
+  ret = await USDT.allowance(user.address, config.charitable_addr);
   user.set_USDT_approve(ret == ethers.MaxUint256);
 
   const QFT = new ethers.Contract(config.qft_addr, config.erc20, Provider);

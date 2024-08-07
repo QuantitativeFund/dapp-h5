@@ -97,17 +97,17 @@
                 <van-icon name="info-o" :color="getColor(key)" class="cell_icon" />
               </template>
             </van-cell>
-            <van-cell title="空投数量" :value="BigNumber(ethers.formatEther(obj.info.airdrop)).toFixed(6)" >
+            <van-cell title="空投数量" :value="BigNumber(ethers.formatEther(obj.info.airdrop)).toFixed(6)">
               <template #icon>
                 <van-icon name="guide-o" :color="getColor(key)" class="cell_icon" />
               </template>
             </van-cell>
-            <van-cell title="投票数量" :value="BigNumber(ethers.formatEther(obj.info.vote)).toFixed(6)" >
+            <van-cell title="投票数量" :value="BigNumber(ethers.formatEther(obj.info.vote)).toFixed(6)">
               <template #icon>
                 <van-icon name="cash-o" :color="getColor(key)" class="cell_icon" />
               </template>
             </van-cell>
-          
+
             <van-cell title="基本算力" :value="BigNumber(ethers.formatEther(obj.info.vote_power)).toFixed(4)">
               <template #icon>
                 <van-icon :name="getIcon(key)" :color="getColor(key)" class="cell_icon" />
@@ -309,13 +309,17 @@ async function QFT_Approve() {
     forbidClick: true,
     duration: 0,
   })
-
-  const QFT = new ethers.Contract(config.qft_addr, config.erc20, Singer);
-  const tx = await QFT.approve(config.mining_addr, ethers.MaxUint256);
-  tx.wait().then(async () => {
-    user.set_QFT_approve(true);
-    showSuccessToast('授权成功');
-  });
+  try {
+    const QFT = new ethers.Contract(config.qft_addr, config.erc20, Singer);
+    const tx = await QFT.approve(config.mining_addr, ethers.MaxUint256);
+    tx.wait().then(async () => {
+      user.set_QFT_approve(true);
+      showSuccessToast('授权成功');
+    });
+  } catch (err) {
+    console.log(err);
+    showFailToast('授权失败');
+  }
 }
 
 async function voteMining() {
