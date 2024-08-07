@@ -60,7 +60,7 @@
             </van-cell>
             <van-cell>
               <template #value>
-                <van-button type="primary" round @click="bind(obj.sign, obj.c_addr, obj.id)">绑定</van-button>
+                <van-button type="primary" size="small" @click="bind(obj.sign, obj.c_addr, obj.id)">绑定</van-button>
               </template>
             </van-cell>
           </van-cell-group>

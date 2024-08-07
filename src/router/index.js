@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/friends'
+      redirect: '/charitable'
     },
     {
       path: '/friends',

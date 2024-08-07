@@ -2,8 +2,11 @@
   <van-pull-refresh v-model="loading" @refresh="load" style="min-height: 80vh;">
     <van-tabs sticky animated swipeable v-model:active="active">
       <van-tab title="捐献">
-        <van-empty description="无数据" />
+
         <van-cell-group inset>
+          <van-cell>
+            <van-highlight keywords="QFT" source-string="柬埔寨慈善基金会与量子基金QFT合作,一起推出QFT挖矿系统来回报广大社会爱心人士,在量子基金的加持下,相信慈善事业会走的更远..." />
+          </van-cell>
         </van-cell-group>
       </van-tab>
 
