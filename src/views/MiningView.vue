@@ -97,6 +97,17 @@
                 <van-icon name="info-o" :color="getColor(key)" class="cell_icon" />
               </template>
             </van-cell>
+            <van-cell title="空投数量" :value="BigNumber(ethers.formatEther(obj.info.airdrop)).toFixed(6)" >
+              <template #icon>
+                <van-icon name="guide-o" :color="getColor(key)" class="cell_icon" />
+              </template>
+            </van-cell>
+            <van-cell title="投票数量" :value="BigNumber(ethers.formatEther(obj.info.vote)).toFixed(6)" >
+              <template #icon>
+                <van-icon name="cash-o" :color="getColor(key)" class="cell_icon" />
+              </template>
+            </van-cell>
+          
             <van-cell title="基本算力" :value="BigNumber(ethers.formatEther(obj.info.vote_power)).toFixed(4)">
               <template #icon>
                 <van-icon :name="getIcon(key)" :color="getColor(key)" class="cell_icon" />
@@ -174,7 +185,7 @@ function getValue(key) {
       vp = minings.value[key].info.vote_power;
     }
   }
-  return `${BigNumber(ethers.formatEther(vp)).times(6).toFixed(6)}`;
+  return `${BigNumber(ethers.formatEther(vp)).toFixed(4)}`;
 }
 
 function get_percentage(key) {
