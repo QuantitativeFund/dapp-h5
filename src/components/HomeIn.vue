@@ -36,7 +36,7 @@
           </van-cell>
           <van-cell title="QFT" :value="BigNumber(user.QFT).toFixed(6)">
             <template #icon>
-              <img src="/qft.svg" class="cell_icon" alt="qft">
+              <img src="/qft.png" class="cell_icon" alt="qft">
             </template>
           </van-cell>
         </van-cell-group>

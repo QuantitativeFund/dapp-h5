@@ -7,7 +7,7 @@
         <van-cell title="版本" :value="config.version" label="Copyright ©2023~2024" />
         <van-cell title="代币符号" value="QFT">
           <template #right-icon>
-            <van-image src="/qft.svg" />
+            <van-image src="/qft.png" />
           </template>
         </van-cell>
         <van-cell title="发行量" value="10亿" />
@@ -20,7 +20,7 @@
 
     <van-nav-bar id="up" @click-left="showTop = true" placeholder title="💰量子基金收益系统💰">
       <template #left>
-        <van-image width="40" height="40" src="/qft.svg" />
+        <van-image width="40" height="40" src="/qft.png" />
         <van-tag round plain type="primary">QFT</van-tag>
       </template>
     </van-nav-bar>
