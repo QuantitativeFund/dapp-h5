@@ -25,7 +25,7 @@ const config = {
     //chainId: "0xcc",
     chainId: "0xb63f",
 
-    api: 'https://site.metabasenet.site/api/',
+    api: 'https://qftmining.metabasenet.site/api/',
     version: '1.0.0',
 }
 
