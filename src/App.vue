@@ -26,7 +26,7 @@
     </van-nav-bar>
     <router-view></router-view>
     <van-tabbar v-model="active" placeholder>
-      <van-tabbar-item name="charitable" icon="like-o" to="/charitable">慈善</van-tabbar-item>
+      <van-tabbar-item name="swap" icon="exchange" to="/swap">交易所</van-tabbar-item>
       <van-tabbar-item name="friends" icon="friends-o" to="/friends">链接</van-tabbar-item>
       <van-tabbar-item name="mining" icon="diamond-o" to="/mining">挖矿</van-tabbar-item>
       <van-tabbar-item name="user" icon="chart-trending-o" to="/user">收益</van-tabbar-item>

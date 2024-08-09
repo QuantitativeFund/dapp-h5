@@ -5,7 +5,7 @@ const router = createRouter({
   routes: [
     {
       path: '/',
-      redirect: '/charitable'
+      redirect: '/swap'
     },
     {
       path: '/friends',
@@ -23,9 +23,9 @@ const router = createRouter({
       component: () => import('@/views/HomeView.vue')
     },
     {
-      path: '/charitable',
-      name: 'charitable',
-      component: () => import('@/views/CharitableView.vue')
+      path: '/swap',
+      name: 'swap',
+      component: () => import('@/views/SwapView.vue')
     },
     {
       path: '/user',
